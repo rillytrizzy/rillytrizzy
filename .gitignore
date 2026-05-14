@@ -1,6 +1,5 @@
 .env
-clips.json
-clips.csv
+# clips.json and clips.csv are intentionally not ignored — seed data is committed
 __pycache__/
 *.pyc
 *.pyo
