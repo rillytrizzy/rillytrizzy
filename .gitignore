@@ -1,0 +1,10 @@
+.env
+clips.json
+clips.csv
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+.DS_Store
