@@ -123,16 +123,20 @@
 
 ## AUTOMATION BUILD ORDER
 
-Execute Codex tasks in this sequence. Each depends on the previous.
+All automation tasks complete. Implementation verified in pipeline.py and scraper.py.
 
-| Order | Task | File | Prompt Location | Status |
-|---|---|---|---|---|
-| 1 | T05 / T07 — Niche + pillar routing update | pipeline.py | CODEX_TASK_PROMPTS.md | PENDING |
-| 2 | T09 — --brands CLI argument | pipeline.py | CODEX_TASK_PROMPTS.md | PENDING |
-| 3 | T10 / T11 / T12 — YouTube search + --brand arg | scraper.py | CODEX_TASK_PROMPTS.md | PENDING |
-| 4 | T08 — Copyright risk flag | pipeline.py | CODEX_TASK_PROMPTS.md | PENDING |
-| 5 | T17 — --series CLI argument | pipeline.py | CODEX_TASK_PROMPTS.md | PENDING |
-| 6 | T13 — Archive.org scraper stub | scraper.py | CODEX_TASK_PROMPTS.md | PENDING |
+| Order | Task | File | Status |
+|---|---|---|---|
+| 1 | T05 / T07 — Niche + pillar routing update | pipeline.py | **COMPLETE** |
+| 2 | T06 — sources field per account | pipeline.py | **COMPLETE** |
+| 3 | T09 — --brands CLI argument | pipeline.py | **COMPLETE** |
+| 4 | T08 — copyright_risk flag | pipeline.py | **COMPLETE** |
+| 5 | T17 — --series CLI argument + manifest field | pipeline.py | **COMPLETE** |
+| 6 | T10 / T11 / T12 — YouTube search + --brand arg | scraper.py | **COMPLETE** |
+| 7 | T13 — Archive.org scraper stub | scraper.py | **COMPLETE** |
+| 8 | T16 — Episode 1 outline (Computing 1950–2026) | EP01_computing_1950_2026.md | **COMPLETE** |
+
+**Next step:** Add API keys to `.env` → run smoke test `python pipeline.py <url> --brands agent_maxxing`
 
 ---
 

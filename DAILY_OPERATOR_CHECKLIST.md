@@ -132,13 +132,20 @@ python pipeline.py <url2> --brands agent_maxxing
 
 ## RESERVED ACCOUNT MONITORING
 
-These accounts are not yet posting. Monitor handle status only.
+agent_pastforward is the only RESERVED account. agent_viral is ACTIVE. agent_trending is RETIRED.
 
 | Account | Check | Action If Issue |
 |---|---|---|
 | agent_pastforward | TikTok handle still `agent_pastforward`? | Log in; verify username unchanged |
-| agent_viral | TikTok account created yet? | If not, create on TikTok immediately |
-| agent_trending | TikTok handle still `agent.trending`? | Check cooldown status; rename when available |
+
+### TikTok Cooldown Rename Tracking (ACTIVE accounts)
+
+| Account | Current TikTok Username | Target | Action When Available |
+|---|---|---|---|
+| agent_afterhours | `agent.afterhours` | `agent_afterhours` | Rename in TikTok Profile → Edit → Username |
+| agent_viral | `agent.trending` (repurposed) | `agent_viral` | Rename in TikTok Profile → Edit → Username |
+
+> **agent_trending is RETIRED.** The `agent.trending` TikTok account is being repurposed as `agent_viral` — not renamed to `agent_trending`.
 
 ---
 
