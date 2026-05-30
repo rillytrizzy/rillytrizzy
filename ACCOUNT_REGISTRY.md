@@ -59,7 +59,7 @@
 | X | Claim needed |
 | Threads | Claim needed |
 | Music Platforms | Claim on Spotify for Artists, SoundCloud, Apple Music for Artists |
-| Notes | Not a network account — founder layer only. Secure after agent_maxxing, agent_afterhours, agent_pastforward, agent_viral, and agent_trending handles are all claimed. |
+| Notes | Not a network account — founder layer only. Secure after agent_maxxing, agent_afterhours, agent_pastforward, and agent_viral handles are all claimed. (agent_trending is RETIRED — no handles to claim.) |
 
 ---
 
