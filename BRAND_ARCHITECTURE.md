@@ -1,9 +1,9 @@
 # Agent Network Architecture v1.0 (LOCKED)
 
 **Status:** LOCKED — Do not modify without a formal revision audit.
-**Version:** 1.0
+**Version:** 1.1
 **Last Updated:** 2026-05-30
-**Change Log:** agent_trending retired; agent_viral absorbs niche. TikTok + YouTube handle acquisition status documented. Phase roadmap updated.
+**Change Log:** agent_trending restored as full network account (no longer retired). agent_viral and agent_trending both confirmed as distinct network properties. TikTok dot-to-underscore rename cooldowns documented for agent.afterhours and agent.trending. YouTube two-channel situation clarified. Phase roadmap consolidated to 3 phases.
 
 ---
 
@@ -11,7 +11,7 @@
 
 **Operate as a network of sibling Agent brands (Option B).**
 
-The five content properties attract genuinely non-overlapping audiences. Forcing them onto one account dilutes algorithm signal for all five. The shared `agent_` namespace creates network identity and brand equity without homogenizing content. As the network grows, individual accounts can be staffed, licensed, or monetized independently — giving the operator a media company, not a single creator account.
+The six content properties attract genuinely non-overlapping audiences. Forcing them onto one account dilutes algorithm signal for all six. The shared `agent_` namespace creates network identity and brand equity without homogenizing content. As the network grows, individual accounts can be staffed, licensed, or monetized independently — giving the operator a media company, not a single creator account.
 
 The personal brand (rillytrizzy) sits above the network as the named founder — the human face who connects all Agent accounts.
 
@@ -31,10 +31,9 @@ RILLYTRIZZY — Founder Layer
     ├── agent_maxxing .............. AI / automation / future of work  [ACTIVE]
     ├── agent_afterhours ........... EDM / festivals / music culture   [ACTIVE]
     ├── agent_pastforward .......... History / forecasting / timelines [RESERVED]
-    └── agent_viral ................ Viral clips / entertainment / trends [RESERVED]
+    ├── agent_viral ................ Viral clips / broad entertainment [RESERVED]
+    └── agent_trending ............. Trends / internet culture         [RESERVED]
 ```
-
-> **Note:** agent_trending has been retired as a standalone brand. Its content niche (internet culture, trending topics) is absorbed into agent_viral.
 
 All Agent accounts share:
 - Visual branding system
@@ -52,13 +51,16 @@ Claiming handles does not mean the brand is actively publishing. Reserved accoun
 
 | Account | Status | TikTok | YouTube | Notes |
 |---|---|---|---|---|
-| agent_maxxing | **ACTIVE** | Secured | Channel exists (handle pending cooldown) | Handle @agent_maxxing pending YouTube cooldown |
-| agent_afterhours | **ACTIVE** | Secured | — | Instagram secured |
-| agent_pastforward | **RESERVED** | Secured | — | Handle claimed on TikTok; not yet publishing |
-| agent_viral | **RESERVED** | Secured (username cooldown) | Channel exists | TikTok username: agent.trending (temporary — see note) |
-| rillytrizzy | **ACTIVE** | — | — | Not yet secured cross-platform; medium priority |
+| agent_maxxing | **ACTIVE** | Secured (underscore) | Channel exists — handle pending cooldown | YouTube handle cooldown: @agent_afterhours → @agent_maxxing |
+| agent_afterhours | **ACTIVE** | Secured (dot — rename pending) | Empty channel exists | TikTok username: agent.afterhours → target: agent_afterhours |
+| agent_pastforward | **RESERVED** | Secured | — | Claimed on TikTok; not yet publishing |
+| agent_viral | **RESERVED** | — | — | Not yet created on TikTok |
+| agent_trending | **RESERVED** | Secured (dot — rename pending) | — | TikTok username: agent.trending → target: agent_trending |
+| rillytrizzy | **ACTIVE** | — | — | Not yet secured cross-platform; secure after core network handles |
 
-> **TikTok — agent_viral username note:** Display name is "Agent Viral." Username is currently `agent.trending` due to TikTok username cooldown restrictions. Final target username remains `agent_viral`. This is a temporary handle mismatch and does not affect brand identity.
+> **TikTok username cooldowns:** Two TikTok accounts have dot-convention usernames due to platform restrictions at time of registration. Target renames: `agent.afterhours` → `agent_afterhours` and `agent.trending` → `agent_trending`. These are temporary handle mismatches and do not affect brand identity. Final target usernames use underscore convention throughout.
+
+> **YouTube — two channels:** The primary "Agent Maxxing" channel currently operates at handle @agent_afterhours (cooldown pending rename to @agent_maxxing). A second empty channel exists and will be configured as "Agent After Hours" with handle @agent_afterhours once that handle is freed from the primary channel.
 
 **Rule:** Do not activate RESERVED accounts until the ACTIVE accounts have stable content cadence.
 
@@ -71,8 +73,11 @@ Claiming handles does not mean the brand is actively publishing. Reserved accoun
 | **agent_maxxing** | AI, agents, automation, productivity, tech culture | Builders, early adopters, creators, 18–35 | Explainers, AI tool demos, agent culture commentary | SaaS brand deals, digital products, consulting, newsletter |
 | **agent_afterhours** | EDM, festivals, dance, nightlife, music culture (EDC, AriAtHome) | Music fans, festival-goers, nightlife culture, 18–30 | Music clips, festival highlights, DJ sets, vibe content | Artist partnerships, festival brand deals, merch, streaming |
 | **agent_pastforward** | History, forgotten tech, old predictions, future forecasting | Curious generalists, history buffs, futurists, 25–45 | Comparison clips, "they predicted this," timeline storytelling | Education brand deals, book deals, speaking |
-| **agent_viral** | Viral clips, broad entertainment, trending internet culture | Mass audience, platform-native, 16–35 | Compilations, reactions, trending content, internet culture | Ad revenue (high volume), brand deals, merch |
+| **agent_viral** | Viral clips, broad entertainment, reaction content | Mass audience, broadest demographic | Compilations, reactions, trending entertainment | Ad revenue (high volume), brand deals, merch |
+| **agent_trending** | Current trends, internet culture, news-driven content | Platform-native users tracking internet culture, 16–30 | Trend breakdowns, "what everyone is talking about" formats | Consumer brand deals, trend reports, newsletter |
 | **rillytrizzy** | Founder identity, personal updates, music, creator journey | Fans of the founder, music listeners, creator community | Personal vlogs, music releases, behind-the-scenes | Music streaming, merchandise, fan support, speaking |
+
+**Overlap Management Rule:** agent_viral posts for entertainment reach. agent_trending posts for cultural commentary. If the hook is "this is funny/wild" → agent_viral. If the hook is "this is what people are talking about and why it matters" → agent_trending.
 
 ---
 
@@ -83,10 +88,13 @@ Claiming handles does not mean the brand is actively publishing. Reserved accoun
 | Handle | Convention | Status | Note |
 |---|---|---|---|
 | agent_maxxing | underscore | Active | — |
-| agent_afterhours | underscore | Active | — |
+| agent_afterhours | underscore | Active | TikTok username currently `agent.afterhours` (dot) — rename pending cooldown |
 | agent_pastforward | underscore | Reserved | — |
-| agent_viral | underscore | Reserved | TikTok username temporarily `agent.trending` (cooldown) |
+| agent_viral | underscore | Reserved | — |
+| agent_trending | underscore | Reserved | TikTok username currently `agent.trending` (dot) — rename pending cooldown |
 | rillytrizzy | none | Active | — |
+
+> **Underscore enforcement:** No active handle may use a dot or hyphen separator. The two dot-convention TikTok usernames (agent.afterhours, agent.trending) are temporary platform artifacts. Both rename queued for underscore once cooldowns expire.
 
 **Why underscore wins for the network:**
 
@@ -125,12 +133,21 @@ Claiming handles does not mean the brand is actively publishing. Reserved accoun
 
 **Current implementation status:**
 
+**Primary channel (Agent Maxxing)**
+
 | Field | Current | Target | Status |
 |---|---|---|---|
 | Channel name | Agent Maxxing | Agent Maxxing | Done |
 | YouTube handle | @agent_afterhours | @agent_maxxing | Pending cooldown expiration |
 
-> **Temporary handle mismatch:** The Agent Maxxing channel currently operates at handle @agent_afterhours due to YouTube handle cooldown restrictions. The handle rename to @agent_maxxing is queued and will be applied when cooldown expires. This does not affect channel name, content, or audience. No action required until cooldown clears.
+**Secondary channel (Agent After Hours)**
+
+| Field | Current | Target | Status |
+|---|---|---|---|
+| Channel name | (empty) | Agent After Hours | Pending — configure after primary handle is freed |
+| YouTube handle | — | @agent_afterhours | Pending — handle becomes available once primary renames to @agent_maxxing |
+
+> **Temporary handle mismatch:** The Agent Maxxing channel currently operates at handle @agent_afterhours due to YouTube handle cooldown restrictions. The rename to @agent_maxxing is queued. Once that rename completes, the handle @agent_afterhours becomes available to assign to the currently-empty secondary channel, which will be configured as "Agent After Hours." No action required until cooldown clears.
 
 ---
 
@@ -144,11 +161,11 @@ These handles have existing audience, genuine brand uniqueness, or both. Losing 
 |---|---|---|---|
 | agent_maxxing | TikTok | **SECURED** | Protect — do not rename |
 | agent_maxxing | YouTube (handle) | Pending cooldown | Rename @agent_afterhours → @agent_maxxing when cooldown clears |
-| agent_afterhours | TikTok | **SECURED** | Protect |
+| agent_afterhours | TikTok | **SECURED** (as agent.afterhours) | Rename to agent_afterhours when cooldown clears |
 | agent_pastforward | TikTok | **SECURED** | Protect — do not activate yet |
-| agent_maxxing | Instagram | Claim needed | Claim to complete cross-platform coverage |
-| agent_afterhours | Instagram | Claim needed | Claim for network completeness |
-| rillytrizzy | Instagram | Rename needed | Rename @agent_rillytrizzy → @rillytrizzy; claim on X, TikTok, music platforms |
+| agent_trending | TikTok | **SECURED** (as agent.trending) | Rename to agent_trending when cooldown clears |
+| agent_maxxing | Instagram, X, Threads | Claim needed | Claim to complete cross-platform coverage |
+| agent_afterhours | Instagram, X, Threads | Claim needed | Claim for network completeness |
 
 ### Tier 2 — Reserve When Possible
 
@@ -156,11 +173,11 @@ Descriptive handles with lower uniqueness risk. Claim when bandwidth allows but 
 
 | Handle | Platform | Action |
 |---|---|---|
-| agent_viral | Instagram, X, Threads | Claim — do not activate |
-| agent_pastforward | Instagram, YouTube, X | Claim to complete cross-platform coverage |
-| agent_afterhours | YouTube, X, Threads | Claim for network completeness |
-| agent_maxxing | X, Threads | Claim |
-| rillytrizzy | TikTok, X, music platforms | Claim after core Agent brands secured |
+| agent_pastforward | Instagram, YouTube, X, Threads | Claim to complete cross-platform coverage |
+| agent_viral | TikTok, Instagram, YouTube, X, Threads | Claim — do not activate |
+| agent_trending | Instagram, YouTube, X, Threads | Claim after TikTok cooldown resolved |
+| agent_maxxing | YouTube (secondary) | Reserve for future use |
+| rillytrizzy | TikTok, X, Threads, music platforms | Claim after core Agent brands secured |
 
 ---
 
@@ -173,7 +190,8 @@ Every Agent account functions as both a content property and a distribution node
 | agent_maxxing | Follow @agent_pastforward for future predictions and historical technology stories. |
 | agent_afterhours | Follow @rillytrizzy for music releases and personal updates. |
 | agent_pastforward | Follow @agent_maxxing for AI and future-of-work coverage. |
-| agent_viral | Follow @agent_maxxing for AI and automation content. |
+| agent_viral | Follow @agent_trending for internet culture analysis. |
+| agent_trending | Follow @agent_viral for entertainment-focused content. |
 | rillytrizzy | Follow @agent_afterhours for music and festival coverage. |
 
 **Rule:** Cross-promotion must always be contextually relevant. No forced promotion. The goal is network discovery, not spam.
@@ -230,7 +248,7 @@ The LLM step includes a routing classifier. Each clip is tagged with an account 
 
 ```
 Given: transcript excerpt + source context
-Classify into: [agent_maxxing, agent_afterhours, agent_pastforward, agent_viral]
+Classify into: [agent_maxxing, agent_afterhours, agent_pastforward, agent_viral, agent_trending]
 Output: account assignment + confidence score
 ```
 
@@ -285,42 +303,40 @@ Human approval is required for:
 
 ### Phase 1 — Handle Acquisition
 
-Complete handle ownership across all platforms before proceeding.
+Complete handle ownership across all platforms before proceeding. No profile work, no content, no automation until all handles are secured.
 
-1. Resolve YouTube handle cooldown → rename to @agent_maxxing
-2. Claim @agent_maxxing on Instagram, X, Threads
-3. Claim @agent_afterhours on Instagram, X, Threads
-4. Resolve TikTok username cooldown → rename agent.trending → agent_viral
-5. Claim @agent_pastforward on Instagram, YouTube, X, Threads
-6. Claim @agent_viral on Instagram, YouTube, X, Threads
+1. Resolve YouTube handle cooldown → rename primary channel handle to @agent_maxxing
+2. Configure empty YouTube channel → rename to "Agent After Hours", assign handle @agent_afterhours
+3. Resolve TikTok cooldowns → rename agent.afterhours → agent_afterhours, rename agent.trending → agent_trending
+4. Claim @agent_maxxing on Instagram, X, Threads
+5. Claim @agent_afterhours on Instagram, X, Threads
+6. Claim @agent_pastforward on Instagram, YouTube, X, Threads
+7. Claim @agent_viral on TikTok, Instagram, YouTube, X, Threads
+8. Claim @agent_trending on Instagram, YouTube, X, Threads
 
-### Phase 2 — Cross-Platform Account Creation
+### Phase 2 — Cross-Platform Account Creation and Profile Optimization
 
-Create all missing accounts. Every brand must exist on every active platform before profile optimization begins.
+Create all missing accounts and bring every account to a publishable baseline before any content is posted.
 
-7. Create @rillytrizzy on TikTok, X, music platforms (Spotify for Artists, SoundCloud, Apple Music for Artists)
-8. Verify all accounts are visible, accessible, and not flagged
+9. Create @rillytrizzy on TikTok, X, Threads, music platforms (Spotify for Artists, SoundCloud, Apple Music for Artists)
+10. Write and apply bios for all accounts
+11. Apply profile images (consistent Agent Network visual system)
+12. Apply banners where supported
+13. Add cross-platform links to all bios
+14. Verify all accounts are visible, accessible, and not flagged
 
-### Phase 3 — Profile Optimization
+### Phase 3 — Automation MVP and Phased Activation
 
-Bring all accounts to a publishable baseline. No content until this is done.
+Only after Phases 1 and 2 are complete.
 
-9. Write and apply bios for all accounts
-10. Apply profile images (consistent Agent Network visual system)
-11. Apply banners where supported
-12. Add cross-platform links in all bios
+15. Set `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` in `.env`
+16. Run `pipeline.py` against a test URL
+17. Verify: clips extracted, captions generated, account routing correct, review queue written
+18. Post first approved clips manually to @agent_maxxing and @agent_afterhours
+19. After agent_maxxing and agent_afterhours are producing consistently → activate agent_pastforward
+20. After agent_pastforward is stable → activate agent_viral and agent_trending
 
-### Phase 4 — Automation MVP
-
-Only after Phases 1–3 are complete.
-
-13. Set `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` in `.env`
-14. Run `pipeline.py` against a test URL
-15. Verify: clips extracted, captions generated, account routing correct, review queue written
-16. Post first approved clips manually to @agent_maxxing and @agent_afterhours
-17. After agent_maxxing and agent_afterhours are producing consistently → expand pipeline to agent_pastforward and agent_viral
-
-**Rule:** Do not launch additional accounts until existing active accounts can be fed consistently.
+**Rule:** Do not launch additional accounts until existing active accounts can be fed consistently. No two active accounts may share the same content purpose.
 
 ---
 
@@ -329,21 +345,23 @@ Only after Phases 1–3 are complete.
 ### Secured
 
 **TikTok**
-- [x] agent_maxxing
-- [x] agent_afterhours
+- [x] agent_maxxing (underscore — correct)
+- [x] agent_afterhours (dot — username: agent.afterhours, rename pending)
 - [x] agent_pastforward
-- [x] agent_viral (display name: Agent Viral / username: agent.trending — cooldown pending)
+- [x] agent_trending (dot — username: agent.trending, rename pending)
 
 **YouTube**
-- [x] Agent Maxxing channel exists
-- [x] Agent Viral channel exists
+- [x] Primary channel: "Agent Maxxing" (exists — handle cooldown pending)
+- [x] Secondary channel: (empty — to be configured as "Agent After Hours")
 
 ### Pending Cooldowns
 
-| Platform | Handle | Target | Status |
+| Platform | Current Username/Handle | Target | Action |
 |---|---|---|---|
-| YouTube | @agent_afterhours | @agent_maxxing | Rename queued — awaiting cooldown expiration |
-| TikTok | agent.trending | agent_viral | Rename queued — awaiting cooldown expiration |
+| YouTube | @agent_afterhours | @agent_maxxing | Rename primary channel handle when cooldown expires |
+| YouTube | — | @agent_afterhours | Assign to empty secondary channel after primary rename completes |
+| TikTok | agent.afterhours | agent_afterhours | Rename to underscore when cooldown expires |
+| TikTok | agent.trending | agent_trending | Rename to underscore when cooldown expires |
 
 ### Pending Creation
 
@@ -354,7 +372,8 @@ The following platforms still need accounts created or handles claimed:
 | agent_maxxing | Instagram, X, Threads |
 | agent_afterhours | Instagram, X, Threads |
 | agent_pastforward | Instagram, YouTube, X, Threads |
-| agent_viral | Instagram, X, Threads |
+| agent_viral | TikTok, Instagram, YouTube, X, Threads |
+| agent_trending | Instagram, YouTube, X, Threads |
 | rillytrizzy | TikTok, X, Threads, music platforms |
 
 ---
@@ -363,12 +382,15 @@ The following platforms still need accounts created or handles claimed:
 
 ### Identity
 
-- [ ] agent_maxxing secured everywhere
-- [ ] agent_afterhours secured everywhere
-- [ ] agent_pastforward secured everywhere
-- [ ] agent_viral secured everywhere (including cooldown resolved)
-- [ ] rillytrizzy secured everywhere
-- [ ] YouTube handle @agent_maxxing confirmed (cooldown resolved)
+- [ ] agent_maxxing secured everywhere (YouTube, TikTok, Instagram, X, Threads)
+- [ ] agent_afterhours secured everywhere — including underscore rename on TikTok
+- [ ] agent_pastforward secured everywhere (YouTube, TikTok, Instagram, X, Threads)
+- [ ] agent_viral secured everywhere (YouTube, TikTok, Instagram, X, Threads)
+- [ ] agent_trending secured everywhere — including underscore rename on TikTok
+- [ ] rillytrizzy secured everywhere — after core Agent brands are secured
+- [ ] YouTube primary channel handle renamed to @agent_maxxing (cooldown resolved)
+- [ ] YouTube secondary channel configured as "Agent After Hours" at @agent_afterhours
+- [ ] No active handle uses a dot or hyphen separator — underscores only
 
 ### Operations
 
@@ -376,6 +398,7 @@ The following platforms still need accounts created or handles claimed:
 - [ ] All profile images applied (Agent Network visual system)
 - [ ] All banners applied where supported
 - [ ] Cross-platform links added to all bios
+- [ ] No two active accounts serve the same content purpose
 
 ### Automation
 
@@ -383,6 +406,8 @@ The following platforms still need accounts created or handles claimed:
 - [ ] Caption generation tested
 - [ ] Hashtag generation tested
 - [ ] Routing classifier tested (agent_maxxing + agent_afterhours only at MVP)
+- [ ] Phased expansion: agent_pastforward activated after MVP is stable
+- [ ] Phased expansion: agent_viral and agent_trending activated after agent_pastforward is stable
 
 ---
 
