@@ -1,4 +1,4 @@
-# Agent Network Architecture v1.0 (Locked)
+# Agent Network Architecture v1.0 (LOCKED)
 
 **Status:** LOCKED — Do not modify without a formal revision audit.
 **Version:** 1.0
@@ -46,16 +46,18 @@ While maintaining distinct content niches, target audiences, and monetization pa
 
 ## 2. ACCOUNT ACTIVATION STATUS
 
-| Account | Status | Notes |
-|---|---|---|
-| agent_maxxing | **ACTIVE** | Primary AI flagship; first YouTube channel |
-| agent_afterhours | **ACTIVE** | Music/EDM brand; second YouTube channel when ready |
-| rillytrizzy | **ACTIVE** | Founder identity across personal platforms |
-| agent_pastforward | **RESERVED** | Claim handles; do not activate until maxxing + afterhours are producing consistently |
-| agent_viral | **RESERVED** | Reserve handles; lower activation priority |
-| agent_trending | **RESERVED** | Reserve handles; lower activation priority |
+Claiming handles does not mean the brand is actively publishing. Reserved accounts are secured but not yet operational.
 
-**Rule:** Do not activate RESERVED accounts until the two ACTIVE Agent accounts have stable content cadence.
+| Account | Status |
+|---|---|
+| agent_maxxing | **ACTIVE** |
+| agent_afterhours | **ACTIVE** |
+| rillytrizzy | **ACTIVE** |
+| agent_pastforward | **RESERVED** |
+| agent_viral | **RESERVED** |
+| agent_trending | **RESERVED** |
+
+**Rule:** Do not activate RESERVED accounts until the ACTIVE accounts have stable content cadence.
 
 ---
 
@@ -101,21 +103,27 @@ When in doubt: if the hook is "this is funny/wild" → agent_viral. If the hook 
 
 ---
 
-## 5. YOUTUBE DECISION (Resolved)
+## 5. YOUTUBE FLAGSHIP DECISION
 
-**Option A — Confirmed.**
+**Approved Option A — LOCKED.**
 
-The current YouTube channel (handle: @agent_afterhours, channel name: agent_maxxing) is restructured as follows:
+**Primary YouTube Channel**
 
-| | Current | Target |
-|---|---|---|
-| Handle | @agent_afterhours | @agent_maxxing |
-| Channel Name | agent_maxxing | Agent Maxxing |
-| Content | Mixed | AI / agents / automation / tech culture |
+| Field | Value |
+|---|---|
+| Handle | @agent_maxxing |
+| Channel Name | Agent Maxxing |
+| Purpose | AI, agents, automation, productivity, future-of-work content |
 
-A separate `@agent_afterhours` YouTube channel is created when the After Hours content track is ready to launch as a standalone property.
+**Future Secondary Channel**
 
-**Rationale:** AI/agent content has the clearest business upside (SaaS sponsorships, newsletters, digital products, consulting, communities). The primary YouTube asset should be the flagship AI channel. Music/festival content is valuable but less directly monetizable and can launch on its own dedicated channel.
+| Field | Value |
+|---|---|
+| Handle | @agent_afterhours |
+| Channel Name | Agent After Hours |
+| Purpose | Music, festivals, nightlife, EDM, dance culture |
+
+**Rationale:** Agent Maxxing has the strongest long-term business upside through AI sponsorships, SaaS partnerships, newsletters, digital products, consulting, and community offerings. The flagship YouTube asset belongs to Agent Maxxing. The After Hours channel is created separately when the music content track is ready to operate as a standalone property.
 
 ---
 
@@ -147,22 +155,19 @@ Descriptive handles with lower uniqueness risk. Claim when bandwidth allows but 
 
 ---
 
-## 7. CROSS-PROMOTION RULE
+## 7. AGENT NETWORK DISCOVERY SYSTEM
 
-Every Agent account may and should reference other Agent accounts. The shared namespace is a discovery engine.
+Every Agent account functions as both a content property and a distribution node. Cross-promotion is encouraged when relevant.
 
-**Standard cross-promotion pattern:**
-
-| Account | Cross-promotion line |
+| Account | Cross-promotion |
 |---|---|
-| agent_maxxing | "More festival and music content → @agent_afterhours" |
-| agent_afterhours | "Future-tech and AI content → @agent_maxxing" |
-| agent_pastforward | "AI and future content → @agent_maxxing" |
-| agent_viral | "AI tools and automation → @agent_maxxing" |
-| agent_trending | "Historical context for this trend → @agent_pastforward" |
-| All accounts | "Behind the network → @rillytrizzy" |
+| agent_maxxing | Follow @agent_pastforward for future predictions and historical technology stories. |
+| agent_afterhours | Follow @rillytrizzy for music releases and personal updates. |
+| agent_pastforward | Follow @agent_maxxing for AI and future-of-work coverage. |
+| agent_viral | Follow @agent_trending for internet culture analysis. |
+| agent_trending | Follow @agent_viral for entertainment-focused content. |
 
-**Rule:** Cross-promotion must be contextually relevant — only reference another account when its content genuinely extends the current post. Do not cross-promote every post.
+**Rule:** Cross-promotion must always be contextually relevant. No forced promotion. The goal is network discovery, not spam.
 
 ---
 
@@ -201,7 +206,7 @@ VIDEO URL INPUT
     - Platform variant (TikTok vs. Reels vs. Shorts formatting)
       │
       ▼
-[5] HUMAN REVIEW (required — see governance rule below)
+[5] HUMAN REVIEW (required — see governance section below)
       │
       ▼
 [6] PACKAGE + SCHEDULE
@@ -220,7 +225,7 @@ Classify into: [agent_maxxing, agent_afterhours, agent_pastforward, agent_viral,
 Output: account assignment + confidence score
 ```
 
-Low-confidence clips (below threshold) are flagged for human review before scheduling. Only ACTIVE accounts receive auto-scheduled content.
+Low-confidence clips are flagged for human review before scheduling. Only ACTIVE accounts receive auto-scheduled content.
 
 ### Existing Infrastructure
 
@@ -239,39 +244,54 @@ For MVP with agent_maxxing and agent_afterhours running:
 
 ---
 
-## 9. AUTOMATION GOVERNANCE RULE
+## 9. AUTOMATION GOVERNANCE
 
-AI may generate: clips, captions, hashtags, posting schedules.
+The automation system may:
 
-**AI may NOT auto-publish without human approval.**
+- Download source content
+- Generate clips
+- Reframe video
+- Generate captions
+- Generate hashtags
+- Categorize content
+- Route content to accounts
+- Prepare scheduled uploads
 
-Before scheduling, a human must review each clip for:
+The automation system may NOT automatically publish content without approval.
 
-| Risk Category | Examples |
-|---|---|
-| Copyright / DMCA | Music, game footage, film clips |
-| Fair use risk | Commentary, reaction, critique content |
-| Music licensing | Any background music in clips |
-| Defamation risk | Commentary about named individuals |
-| Political content | Any content that could be read as political endorsement |
+Human approval is required for:
 
-This requirement becomes more critical as platform monetization and copyright enforcement tighten. Build the approval step into the pipeline from day one — retrofitting governance is more expensive than building it in.
+- Copyright-sensitive content
+- Music licensing issues
+- Political content
+- Brand sponsorship content
+- Monetized uploads
+- Potential legal-risk content
+
+**Rule:** AI assists production. Humans approve publication.
 
 ---
 
-## 10. IMMEDIATE ACTION ORDER
+## 10. EXECUTION PRIORITY ORDER
 
-Execute in this sequence:
+### Phase 1 — Secure Core Assets
 
-1. **Lock YouTube as Agent Maxxing** — rename handle @agent_afterhours → @agent_maxxing; rename channel to "Agent Maxxing"
-2. **Rename Instagram @agent_rillytrizzy → @rillytrizzy**
-3. **Claim agent_pastforward** on TikTok, Instagram, YouTube, X
-4. **Claim agent_maxxing** on Instagram and any missing platforms
-5. **Claim agent_afterhours** on YouTube (new channel), TikTok, X
-6. **Reserve agent_viral and agent_trending** on all platforms
-7. **Build MVP automation** for agent_maxxing and agent_afterhours
+1. Secure @rillytrizzy
+2. Secure @agent_maxxing everywhere
+3. Secure @agent_afterhours everywhere
+4. Secure @agent_pastforward everywhere
 
-Only after agent_maxxing and agent_afterhours are producing consistently → activate agent_pastforward.
+### Phase 2 — Build MVP Automation
+
+5. Build automation pipeline for agent_maxxing and agent_afterhours
+6. Test end-to-end workflow: URL → Clip → Caption → Hashtags → Review Queue
+
+### Phase 3 — Reserve Expansion Assets
+
+7. Secure @agent_viral and @agent_trending on all platforms
+8. Leave reserved until content capacity exists
+
+**Rule:** Do not launch additional accounts until existing active accounts can be fed consistently.
 
 ---
 
@@ -287,3 +307,9 @@ Only after agent_maxxing and agent_afterhours are producing consistently → act
 - [ ] Architecture frozen and published as v1.0
 - [ ] No two active accounts serve the same content purpose
 - [ ] No active handle uses an inconsistent separator
+
+---
+
+**STATUS: APPROVED**
+**ARCHITECTURE: LOCKED**
+**NEXT PHASE: HANDLE ACQUISITION + AUTOMATION MVP**
