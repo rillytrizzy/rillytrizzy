@@ -171,7 +171,7 @@ All automation tasks complete. Implementation verified in pipeline.py and scrape
 - [x] T12 — --brand CLI argument added to scraper.py
 - [x] T13 — scrape_archive_org() stub added to scraper.py (agent_pastforward)
 - [x] T17 — --series CLI argument and series field added to pipeline.py
-- [ ] T16 — Episode 1 outline drafted (Computing 1950–2026)
+- [x] T16 — Episode 1 outline drafted (EP01_computing_1950_2026.md)
 - [ ] pipeline.py smoke tested end-to-end with API keys
 - [ ] First 100 posts published network-wide ← FIRST MILESTONE
 - [ ] agent_pastforward activated (after ACTIVE trio stable)
@@ -210,8 +210,8 @@ All automation tasks complete. Implementation verified in pipeline.py and scrape
 
 ---
 
-**CURRENT PHASE:** Phase 1 — Handle Acquisition + Automation Build (parallel)
+**CURRENT PHASE:** Phase 1 — Handle Acquisition (human) | Automation Build: COMPLETE
 **ACTIVE ACCOUNTS:** agent_maxxing, agent_afterhours, agent_viral
 **RETIRED:** agent_trending
 **FIRST MILESTONE:** 100 posts network-wide
-**BEST NEXT ACTION:** Claim Instagram/X/Threads handles for agent_maxxing, agent_afterhours, agent_viral (no cooldown — execute now)
+**BEST NEXT ACTION:** Add OPENAI_API_KEY + ANTHROPIC_API_KEY to .env → run smoke test → claim Instagram/X/Threads handles (no cooldown)
