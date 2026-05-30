@@ -17,7 +17,7 @@ These cannot be actioned until the platform releases the lock. Check daily.
 | EQ-00A | Rename handle @agent_afterhours → @agent_maxxing | Human | YouTube | YouTube Studio → Settings → Channel → Handle |
 | EQ-00B | Configure empty channel → "Agent After Hours" + handle @agent_afterhours | Human | YouTube | After EQ-00A completes |
 | EQ-00C | Rename username agent.afterhours → agent_afterhours | Human | TikTok | TikTok → Profile → Edit → Username |
-| EQ-00D | Rename username agent.trending → agent_trending | Human | TikTok | TikTok → Profile → Edit → Username |
+| EQ-00D | Rename username agent.trending → agent_viral | Human | TikTok | TikTok → Profile → Edit → Username (account repurposed — agent_trending is retired) |
 
 ---
 
@@ -31,19 +31,17 @@ Execute these now — no blockers.
 | EQ-01B | Claim handle | Human | Instagram | agent_afterhours |
 | EQ-01C | Claim handle | Human | Instagram | agent_pastforward |
 | EQ-01D | Claim handle | Human | Instagram | agent_viral |
-| EQ-01E | Claim handle | Human | Instagram | agent_trending |
 | EQ-02A | Claim handle | Human | X | agent_maxxing |
 | EQ-02B | Claim handle | Human | X | agent_afterhours |
 | EQ-02C | Claim handle | Human | X | agent_pastforward |
 | EQ-02D | Claim handle | Human | X | agent_viral |
-| EQ-02E | Claim handle | Human | X | agent_trending |
 | EQ-03A | Claim handle | Human | Threads | agent_maxxing |
 | EQ-03B | Claim handle | Human | Threads | agent_afterhours |
 | EQ-03C | Claim handle | Human | Threads | agent_pastforward |
 | EQ-03D | Claim handle | Human | Threads | agent_viral |
-| EQ-03E | Claim handle | Human | Threads | agent_trending |
-| EQ-04A | Claim handle | Human | TikTok | agent_viral (not yet created) |
-| EQ-04B | Claim handle | Human | YouTube | agent_pastforward, agent_trending channels |
+| EQ-04A | Claim handle | Human | TikTok | agent_viral — rename agent.trending → agent_viral after cooldown (EQ-00D) |
+| EQ-04B | Claim handle | Human | YouTube | agent_pastforward channel |
+| ~~EQ-agent_trending~~ | ~~RETIRED~~ | — | — | agent_trending is retired. No handle claims needed. |
 | EQ-05 | Check domain availability + purchase | Human | Registrar | agentmaxxing.com / .co, agentafterhours.com, agentpastforward.com, agentviral.com, agenttrending.com, rillytrizzy.com |
 
 ---

@@ -182,8 +182,9 @@ One SOP per account. Each section is self-contained and can be handed to an oper
 ## PLAYBOOK: AGENT_VIRAL
 
 **Niche:** Viral clips / broad entertainment / reaction content
-**Status:** RESERVED (activate after agent_maxxing + agent_afterhours are stable)
-**Posting target (at activation):** TikTok 2–3x/day · Instagram 2x/day · YouTube Shorts daily · X 3x/day
+**Status:** ACTIVE
+**TikTok handle:** agent.trending (temporary — rename to agent_viral pending cooldown)
+**Posting target:** TikTok 2–3x/day · Instagram 2x/day · YouTube Shorts daily · X 3x/day
 
 ---
 

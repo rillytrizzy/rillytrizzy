@@ -44,21 +44,17 @@ ACCOUNT_PROFILES = {
         "status": "ACTIVE",
         "default_hashtags": ["#EDM", "#festivals", "#AgentAfterHours", "#nightlife", "#EDC", "#dance"],
     },
+    "agent_viral": {
+        "niche": "viral clips, broad entertainment, reaction content",
+        "status": "ACTIVE",
+        "default_hashtags": ["#viral", "#AgentViral", "#fyp", "#entertainment"],
+    },
     "agent_pastforward": {
         "niche": "history, forgotten technology, old predictions, future forecasting, timelines",
         "status": "RESERVED",
         "default_hashtags": ["#history", "#AgentPastForward", "#technology", "#futureforecasting"],
     },
-    "agent_viral": {
-        "niche": "viral clips, broad entertainment, reaction content",
-        "status": "RESERVED",
-        "default_hashtags": ["#viral", "#AgentViral", "#fyp", "#entertainment"],
-    },
-    "agent_trending": {
-        "niche": "current trends, internet culture, news-driven social content",
-        "status": "RESERVED",
-        "default_hashtags": ["#trending", "#AgentTrending", "#internetculture", "#news"],
-    },
+    # agent_trending: RETIRED — handle and niche absorbed. Do not route content here.
 }
 
 ACTIVE_ACCOUNTS = [k for k, v in ACCOUNT_PROFILES.items() if v["status"] == "ACTIVE"]
