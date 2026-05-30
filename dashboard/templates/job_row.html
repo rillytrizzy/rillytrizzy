@@ -1,0 +1,44 @@
+<tr id="job-row-{{ job.id }}"
+  {% if job.status not in ('done', 'failed') %}
+  hx-get="/api/jobs/{{ job.id }}/row"
+  hx-trigger="every 5s"
+  hx-swap="outerHTML"
+  {% endif %}
+  class="border-b border-gray-800 hover:bg-gray-800/40 transition-colors">
+  <td class="px-4 py-3 text-sm max-w-xs">
+    <p class="truncate font-medium">{{ job.clip_title or job.prompt or '(untitled)' }}</p>
+    <p class="text-xs text-gray-500 mt-0.5">{{ job.job_type.replace('_', ' ') }}</p>
+  </td>
+  <td class="px-4 py-3 text-xs text-gray-400 max-w-xs">
+    <span class="truncate block max-w-48">{{ (job.prompt or '')[:80] }}{% if job.prompt and job.prompt|length > 80 %}…{% endif %}</span>
+  </td>
+  <td class="px-4 py-3">
+    {% set color = {'queued': 'gray', 'submitted': 'blue', 'processing': 'yellow', 'done': 'green', 'failed': 'red'}.get(job.status, 'gray') %}
+    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-{{ color }}-900/50 text-{{ color }}-300 border border-{{ color }}-800">
+      {% if job.status == 'processing' %}<span class="animate-pulse">●</span>{% endif %}
+      {{ job.status }}
+    </span>
+  </td>
+  <td class="px-4 py-3 w-32">
+    <div class="flex items-center gap-2">
+      <div class="flex-1 bg-gray-700 rounded-full h-1.5 overflow-hidden">
+        <div class="h-full bg-brand rounded-full transition-all duration-500" style="width:{{ job.progress_pct }}%"></div>
+      </div>
+      <span class="text-xs text-gray-400 shrink-0">{{ job.progress_pct }}%</span>
+    </div>
+  </td>
+  <td class="px-4 py-3 text-xs text-gray-500">
+    {{ job.created_at.strftime('%b %d %H:%M') if job.created_at else '—' }}
+  </td>
+  <td class="px-4 py-3">
+    {% if job.status == 'done' and job.output_url %}
+    <a href="{{ job.output_url }}" target="_blank"
+       class="text-xs text-brand-light hover:underline">View ↗</a>
+    {% elif job.status == 'failed' %}
+    <button hx-post="/api/jobs/{{ job.id }}/retry" hx-target="#job-row-{{ job.id }}" hx-swap="outerHTML"
+            class="text-xs text-yellow-400 hover:underline">Retry</button>
+    {% else %}
+    <span class="text-gray-600 text-xs">—</span>
+    {% endif %}
+  </td>
+</tr>

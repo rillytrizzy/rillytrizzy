@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Jobs — Higgsfield{% endblock %}
+{% block content %}
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Generation Jobs</h1>
+  <div x-data="{open:false}">
+    <button @click="open=true"
+            class="bg-brand hover:bg-brand-dark text-white text-sm px-4 py-2 rounded-lg transition-colors">
+      + New Text-to-Video
+    </button>
+    <div x-show="open" x-transition.opacity class="fixed inset-0 z-40 bg-black/60 flex items-center justify-center p-4" @click.self="open=false">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+        <h2 class="font-semibold text-lg mb-4">Generate Video from Text</h2>
+        <form hx-post="/api/jobs" hx-target="#jobs-table-body" hx-swap="afterbegin"
+              @htmx:after-request="open=false" class="space-y-3">
+          <div>
+            <label class="text-xs text-gray-400 mb-1 block">Prompt</label>
+            <textarea name="prompt" rows="3" required placeholder="Describe the video…"
+                      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand resize-none"></textarea>
+          </div>
+          <div class="flex gap-3">
+            <div class="flex-1">
+              <label class="text-xs text-gray-400 mb-1 block">Duration (sec)</label>
+              <input name="duration_sec" type="number" value="4" min="2" max="16"
+                     class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+            </div>
+            <div class="flex-1">
+              <label class="text-xs text-gray-400 mb-1 block">Aspect Ratio</label>
+              <select name="aspect_ratio"
+                      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+                <option value="9:16">9:16 (Vertical)</option>
+                <option value="16:9">16:9 (Horizontal)</option>
+                <option value="1:1">1:1 (Square)</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex gap-3 pt-1">
+            <button type="button" @click="open=false"
+                    class="flex-1 border border-gray-700 text-gray-400 hover:text-white rounded-lg py-2 text-sm transition-colors">
+              Cancel
+            </button>
+            <button type="submit"
+                    class="flex-1 bg-brand hover:bg-brand-dark text-white rounded-lg py-2 text-sm font-medium transition-colors">
+              Generate
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-gray-800 text-xs text-gray-500 uppercase tracking-wide">
+        <th class="px-4 py-3 text-left">Clip / Title</th>
+        <th class="px-4 py-3 text-left">Prompt</th>
+        <th class="px-4 py-3 text-left">Status</th>
+        <th class="px-4 py-3 text-left">Progress</th>
+        <th class="px-4 py-3 text-left">Created</th>
+        <th class="px-4 py-3 text-left">Output</th>
+      </tr>
+    </thead>
+    <tbody id="jobs-table-body">
+      {% for job in jobs %}
+        {% include "job_row.html" %}
+      {% else %}
+        <tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No jobs yet — transform a clip or generate from text.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

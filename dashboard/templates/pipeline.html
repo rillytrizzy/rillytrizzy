@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Pipeline — Higgsfield{% endblock %}
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-6">Autonomous Pipeline</h1>
+
+<div class="grid lg:grid-cols-2 gap-6 mb-6">
+  <!-- Toggle + status -->
+  <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+    <h2 class="font-semibold mb-4">Pipeline Status</h2>
+    <div class="flex items-center gap-4" x-data="{ enabled: {{ 'true' if settings.auto_pipeline_enabled == 'true' else 'false' }} }">
+      <button @click="
+        enabled = !enabled;
+        fetch('/api/pipeline/' + (enabled ? 'enable' : 'disable'), {method:'POST'});
+        $dispatch('flash', {msg: enabled ? 'Pipeline enabled' : 'Pipeline disabled', type: 'ok'})
+      "
+      :class="enabled ? 'bg-green-500' : 'bg-gray-600'"
+      class="relative inline-flex h-7 w-12 rounded-full transition-colors focus:outline-none">
+        <span :class="enabled ? 'translate-x-6' : 'translate-x-1'"
+              class="inline-block h-5 w-5 mt-1 rounded-full bg-white shadow transform transition-transform"></span>
+      </button>
+      <span class="text-sm" :class="enabled ? 'text-green-400' : 'text-gray-500'" x-text="enabled ? '● Running' : '○ Stopped'"></span>
+    </div>
+    <p class="text-xs text-gray-500 mt-3">When enabled, the pipeline automatically scrapes trending clips, sends them to Higgsfield, and schedules social posts.</p>
+    <button hx-post="/api/pipeline/run_now" hx-swap="none"
+            @htmx:after-request="$dispatch('flash', {msg: 'Pipeline cycle started!', type: 'ok'})"
+            class="mt-4 bg-brand hover:bg-brand-dark text-white text-sm px-4 py-2 rounded-lg transition-colors">
+      ▶ Run Cycle Now
+    </button>
+  </div>
+
+  <!-- Config -->
+  <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+    <h2 class="font-semibold mb-4">Configuration</h2>
+    <form hx-post="/api/pipeline/settings" hx-swap="none"
+          @htmx:after-request="$dispatch('flash', {msg: 'Settings saved!', type: 'ok'})"
+          class="space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Run Interval (min)</label>
+          <input name="pipeline_interval_minutes" type="number" value="{{ settings.pipeline_interval_minutes }}" min="5"
+                 class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Top N Clips</label>
+          <input name="pipeline_top_n_clips" type="number" value="{{ settings.pipeline_top_n_clips }}" min="1" max="20"
+                 class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Min Views Threshold</label>
+        <input name="pipeline_min_views" type="number" value="{{ settings.pipeline_min_views }}" min="0"
+               class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+      </div>
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Post Platforms (comma-separated)</label>
+        <input name="default_post_platforms" value="{{ settings.default_post_platforms }}"
+               placeholder="twitter,youtube,tiktok"
+               class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+      </div>
+      <div class="flex items-center gap-3">
+        <input type="checkbox" name="auto_scrape_on_pipeline" id="auto_scrape"
+               {% if settings.auto_scrape_on_pipeline == 'true' %}checked{% endif %}
+               value="true"
+               class="rounded bg-gray-800 border-gray-700">
+        <label for="auto_scrape" class="text-sm text-gray-300">Refresh clips.json before each run</label>
+      </div>
+      <button type="submit"
+              class="bg-brand hover:bg-brand-dark text-white text-sm px-4 py-2 rounded-lg transition-colors">
+        Save Settings
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Activity log -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl p-5"
+     hx-get="/api/pipeline/status" hx-trigger="every 10s" hx-swap="none"
+     @htmx:after-request="updateLog($event.detail.xhr.response)">
+  <h2 class="font-semibold mb-3">Activity Log</h2>
+  <div id="pipeline-log" class="space-y-1 max-h-72 overflow-y-auto font-mono text-xs">
+    {% if log %}
+      {% for entry in log %}
+      <div class="flex gap-3 text-gray-400">
+        <span class="text-gray-600 shrink-0">{{ entry.ts[:19].replace('T', ' ') }}</span>
+        <span>{{ entry.msg }}</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-gray-600">No activity yet. Run a pipeline cycle to see logs.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function updateLog(response) {
+  try {
+    const data = JSON.parse(response);
+    const log = data.log || [];
+    const el = document.getElementById('pipeline-log');
+    if (!log.length) return;
+    el.innerHTML = log.map(e => `<div class="flex gap-3 text-gray-400"><span class="text-gray-600 shrink-0">${e.ts.slice(0,19).replace('T',' ')}</span><span>${e.msg}</span></div>`).join('');
+  } catch(e) {}
+}
+</script>
+
+{% endblock %}
