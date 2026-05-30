@@ -157,10 +157,22 @@ Execute Codex tasks in this sequence. Each depends on the previous.
 
 ### Phase 3 — Automation + Content
 - [ ] .env: OPENAI_API_KEY and ANTHROPIC_API_KEY added
-- [ ] Codex tasks T05–T13 implemented (see Automation Build Order above)
-- [ ] pipeline.py tested end-to-end
+- [x] T05 — ACCOUNT_PROFILES niche fields updated to content pillar language
+- [x] T06 — sources field added to each ACCOUNT_PROFILES entry
+- [x] T07 — generate_metadata() routing prompt extended with pillars
+- [x] T08 — copyright_risk flag added to pipeline manifest
+- [x] T09 — --brands CLI argument added to pipeline.py
+- [x] T10 — scrape_youtube_search() added to scraper.py
+- [x] T11 — BRAND_SEARCH_QUERIES config dict added to scraper.py
+- [x] T12 — --brand CLI argument added to scraper.py
+- [x] T13 — scrape_archive_org() stub added to scraper.py (agent_pastforward)
+- [x] T17 — --series CLI argument and series field added to pipeline.py
+- [ ] T16 — Episode 1 outline drafted (Computing 1950–2026)
+- [ ] pipeline.py smoke tested end-to-end with API keys
 - [ ] First 100 posts published network-wide ← FIRST MILESTONE
 - [ ] agent_pastforward activated (after ACTIVE trio stable)
+- [ ] Content pillars applied to all active account bios
+- [ ] Source list scraper runs validated per account
 
 ---
 
@@ -168,9 +180,15 @@ Execute Codex tasks in this sequence. Each depends on the previous.
 
 | Component | Status |
 |---|---|
-| pipeline.py | Built — awaiting API keys + Codex tasks T05–T13 |
-| scraper.py | Operational — Twitch, Kick, YouTube |
+| pipeline.py | UPDATED — T05–T09, T17 complete. Awaiting API keys for live test. |
+| scraper.py | UPDATED — T10–T13 complete. YouTube search + Archive.org + --brand arg added. |
 | ACCOUNT_PROFILES | agent_maxxing ACTIVE, agent_afterhours ACTIVE, agent_viral ACTIVE, agent_pastforward RESERVED |
+| Niche + Pillars | UPDATED — all accounts have precise niche strings and content pillars |
+| copyright_risk flag | IMPLEMENTED — URL pre-check + Claude transcript analysis |
+| --brands arg | IMPLEMENTED — restricts pipeline routing to specified brands |
+| --series arg | IMPLEMENTED — tags clips with campaign series name |
+| --brand arg (scraper) | IMPLEMENTED — runs BRAND_SEARCH_QUERIES for specified brand |
+| scrape_archive_org() | IMPLEMENTED — Prelinger Archives public domain search |
 | agent_trending | RETIRED — removed from ACCOUNT_PROFILES |
 | OPENAI_API_KEY | Not configured |
 | ANTHROPIC_API_KEY | Not configured |

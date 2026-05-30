@@ -5,6 +5,8 @@ URL → Download → Clips → Transcribe → Caption/Hashtags → Account-route
 
 Usage:
     python pipeline.py <video_url>
+    python pipeline.py <video_url> --brands agent_maxxing
+    python pipeline.py <video_url> --brands agent_afterhours --series fastest_timeline
     python pipeline.py <video_url> --clip-duration 30 --output my_output/
 
 Requires:
@@ -18,9 +20,9 @@ import json
 import os
 import re
 import subprocess
-import sys
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yt_dlp
 from anthropic import Anthropic
@@ -35,22 +37,54 @@ load_dotenv()
 
 ACCOUNT_PROFILES = {
     "agent_maxxing": {
-        "niche": "AI, agents, automation, productivity, future of work, tech culture",
+        "niche": "AI tool demos, agent workflows, automation hacks, future-of-work commentary, build logs",
+        "pillars": [
+            "AI Tool Demos — walkthroughs of new AI tools, agents, and automations",
+            "Agent Culture — clips on the agentic AI movement, researchers, founders, builders",
+            "Productivity Hacks — workflow automations that save real time (before/after format)",
+            "Future-of-Work Commentary — reaction and opinion on AI, jobs, the builder economy",
+            "Build Logs — behind-the-scenes of building automation pipelines and AI workflows",
+        ],
+        "sources": ["youtube_search", "x_embeds", "youtube_channels"],
         "status": "ACTIVE",
         "default_hashtags": ["#AI", "#AgentMaxxing", "#automation", "#futureofwork", "#tech", "#AIagents"],
     },
     "agent_afterhours": {
-        "niche": "EDM, festivals, dance, nightlife, music culture, EDC, AriAtHome",
+        "niche": "festival highlights, DJ set clips, music drops, nightlife vibe content, artist spotlights",
+        "pillars": [
+            "Festival Highlights — best moments from EDC, Ultra, AriAtHome, Coachella, Tomorrowland",
+            "DJ Set Clips — 30–60s drop moments, booth angles, crowd reactions",
+            "Music Drops & Previews — new track releases, ID reveals, festival previews",
+            "Nightlife Culture — vibe content, aesthetic clips, venue visuals, dance floor energy",
+            "Artist Spotlights — mini-docs or clip compilations on rising and established artists",
+        ],
+        "sources": ["youtube_search", "youtube_channels"],
         "status": "ACTIVE",
         "default_hashtags": ["#EDM", "#festivals", "#AgentAfterHours", "#nightlife", "#EDC", "#dance"],
     },
     "agent_viral": {
-        "niche": "viral clips, broad entertainment, reaction content",
+        "niche": "viral fails, crowd reactions, unexpected moments, trending clips, cross-genre entertainment",
+        "pillars": [
+            "Top Clips of the Week — curated best-of from Twitch, Kick, YouTube",
+            "Reaction Compilations — crowd or audience reaction moments with high shareability",
+            "Unexpected Moments — game fails, sports bloopers, live TV mistakes, unexpected wins",
+            "Trending Formats — adapt current viral video formats to new content (fast-follow)",
+            "Cross-Genre Entertainment — gaming, sports, animals, humans — peak entertainment value",
+        ],
+        "sources": ["twitch", "kick", "youtube_search"],
         "status": "ACTIVE",
         "default_hashtags": ["#viral", "#AgentViral", "#fyp", "#entertainment"],
     },
     "agent_pastforward": {
-        "niche": "history, forgotten technology, old predictions, future forecasting, timelines",
+        "niche": "historical predictions, forgotten technology, then-vs-now timelines, future forecasting",
+        "pillars": [
+            "'They Predicted This' — old footage/text predictions shown alongside today's reality",
+            "Forgotten Technology — inventions and ideas ahead of their time that failed or vanished",
+            "Timeline Comparisons — then vs. now comparisons showing acceleration of change",
+            "Future Forecasting — predict what comes next based on historical acceleration patterns",
+            "Historical Turning Points — key decisions or events that bent the arc of technology",
+        ],
+        "sources": ["archive_org", "youtube_search", "wikimedia"],
         "status": "RESERVED",
         "default_hashtags": ["#history", "#AgentPastForward", "#technology", "#futureforecasting"],
     },
@@ -61,6 +95,12 @@ ACTIVE_ACCOUNTS = [k for k, v in ACCOUNT_PROFILES.items() if v["status"] == "ACT
 
 # Low-confidence threshold — clips below this are flagged for manual review
 CONFIDENCE_THRESHOLD = 0.70
+
+# Music platform domains that signal high copyright risk
+MUSIC_DOMAINS = {
+    "soundcloud.com", "spotify.com", "bandcamp.com",
+    "music.youtube.com", "tidal.com", "deezer.com",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -139,7 +179,7 @@ def extract_clips(video_path: Path, output_dir: Path, clip_duration: int = 45) -
             "-movflags", "+faststart",
             str(clip_path),
         ]
-        result = subprocess.run(cmd, capture_output=True)
+        subprocess.run(cmd, capture_output=True)
 
         if clip_path.exists() and clip_path.stat().st_size > 0:
             clips.append(clip_path)
@@ -167,32 +207,59 @@ def transcribe(clip_path: Path) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Copyright pre-screen
+# ---------------------------------------------------------------------------
+
+def check_copyright_risk(url: str, transcript: str = "") -> bool:
+    """Pre-screen for copyright risk. Music-domain URLs are high risk by default."""
+    domain = urlparse(url).netloc.lower().lstrip("www.")
+    if domain in MUSIC_DOMAINS:
+        return True
+    music_keywords = {"lyrics", "chorus", "verse", "beat drop", "sample", "remix"}
+    keyword_hits = sum(1 for kw in music_keywords if kw in transcript.lower())
+    return keyword_hits >= 2
+
+
+# ---------------------------------------------------------------------------
 # Step 4: Metadata generation (Claude — caption, hashtags, account routing)
 # ---------------------------------------------------------------------------
 
-def generate_metadata(transcript: str, source_title: str, source_url: str) -> dict:
+def generate_metadata(
+    transcript: str,
+    source_title: str,
+    source_url: str,
+    accounts: list[str] | None = None,
+) -> dict:
     """
     Use Claude to generate caption, hashtags, and route clip to the correct
-    ACTIVE account. Returns dict with keys: account, hook, caption, hashtags,
-    confidence.
+    account. Returns dict with keys: account, hook, caption, hashtags,
+    confidence, copyright_risk.
     """
+    route_accounts = accounts if accounts else ACTIVE_ACCOUNTS
+
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        # Fallback: route to first active account with defaults
-        account = ACTIVE_ACCOUNTS[0]
+        account = route_accounts[0]
         return {
             "account": account,
             "hook": source_title[:100],
             "caption": source_title,
             "hashtags": ACCOUNT_PROFILES[account]["default_hashtags"],
             "confidence": 0.0,
+            "copyright_risk": check_copyright_risk(source_url, transcript),
         }
 
     client = Anthropic(api_key=api_key)
 
     account_descriptions = "\n".join(
-        f"  {name} [{profile['status']}]: {profile['niche']}"
-        for name, profile in ACCOUNT_PROFILES.items()
+        "  {name} [{status}]: {niche}\n    Pillars: {pillars}".format(
+            name=name,
+            status=ACCOUNT_PROFILES[name]["status"],
+            niche=ACCOUNT_PROFILES[name]["niche"],
+            pillars=" | ".join(ACCOUNT_PROFILES[name].get("pillars", [])),
+        )
+        for name in route_accounts
+        if name in ACCOUNT_PROFILES
     )
 
     prompt = f"""You are routing content for the Agent Network — a group of sibling social media brands.
@@ -203,18 +270,19 @@ URL: {source_url}
 Clip transcript:
 {transcript or "(no transcript available — use source title to infer content)"}
 
-Accounts (route ONLY to ACTIVE accounts):
+Accounts (route ONLY to one of these):
 {account_descriptions}
 
 Your tasks:
-1. ROUTE — Pick the single best ACTIVE account for this clip.
+1. ROUTE — Pick the single best account for this clip.
 2. HOOK — One sentence, under 100 characters, for the first 3 seconds of the post.
 3. CAPTION — Post caption, 150–250 characters, no hashtags.
 4. HASHTAGS — 6–8 relevant hashtags for the chosen account.
 5. CONFIDENCE — Float 0.0–1.0. Low confidence (<0.7) = content is ambiguous.
+6. COPYRIGHT_RISK — true if the clip contains recognizable music, song lyrics, or copyrighted audio. false otherwise.
 
 Reply with valid JSON only, no markdown fences:
-{{"account":"agent_maxxing","hook":"...","caption":"...","hashtags":["#tag"],"confidence":0.85}}"""
+{{"account":"agent_maxxing","hook":"...","caption":"...","hashtags":["#tag"],"confidence":0.85,"copyright_risk":false}}"""
 
     response = client.messages.create(
         model="claude-sonnet-4-6",
@@ -229,10 +297,16 @@ Reply with valid JSON only, no markdown fences:
 
     data = json.loads(match.group())
 
-    # Safety: never route to RESERVED accounts
-    if data.get("account") not in ACTIVE_ACCOUNTS:
-        data["account"] = ACTIVE_ACCOUNTS[0]
+    # Safety: never route to accounts outside the allowed set
+    if data.get("account") not in route_accounts:
+        data["account"] = route_accounts[0]
         data["confidence"] = 0.0
+
+    # Pre-check can upgrade copyright_risk to true even if Claude said false
+    if check_copyright_risk(source_url, transcript):
+        data["copyright_risk"] = True
+    elif "copyright_risk" not in data:
+        data["copyright_risk"] = False
 
     return data
 
@@ -265,11 +339,29 @@ def build_review_queue(
 # Main pipeline
 # ---------------------------------------------------------------------------
 
-def run_pipeline(url: str, output_root: Path, clip_duration: int = 45) -> dict:
+def run_pipeline(
+    url: str,
+    output_root: Path,
+    clip_duration: int = 45,
+    brands: list[str] | None = None,
+    series: str | None = None,
+) -> dict:
     """
     Full pipeline: URL → account-routed review queue.
     Returns the review queue manifest dict.
     """
+    # Validate and resolve target accounts
+    if brands:
+        unknown = [b for b in brands if b not in ACCOUNT_PROFILES]
+        if unknown:
+            print(f"Warning: unknown brand(s) ignored: {', '.join(unknown)}")
+        route_accounts = [b for b in brands if b in ACCOUNT_PROFILES]
+        if not route_accounts:
+            print("Warning: no valid brands specified — routing to all active accounts")
+            route_accounts = ACTIVE_ACCOUNTS
+    else:
+        route_accounts = ACTIVE_ACCOUNTS
+
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     run_dir = output_root / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -292,10 +384,11 @@ def run_pipeline(url: str, output_root: Path, clip_duration: int = 45) -> dict:
     clip_results = []
     for clip in clips:
         transcript = transcribe(clip)
-        meta = generate_metadata(transcript, video_path.stem, url)
+        meta = generate_metadata(transcript, video_path.stem, url, accounts=route_accounts)
 
         account = meta["account"]
         confidence = meta.get("confidence", 0.0)
+        copyright_risk = meta.get("copyright_risk", False)
         needs_review = confidence < CONFIDENCE_THRESHOLD
 
         clip_results.append({
@@ -307,11 +400,18 @@ def run_pipeline(url: str, output_root: Path, clip_duration: int = 45) -> dict:
             "transcript": transcript,
             "confidence": round(confidence, 2),
             "needs_review": needs_review,
+            "copyright_risk": copyright_risk,
+            "series": series,
             "approved": False,  # humans set this to true before publishing
         })
 
-        flag = " ⚑ LOW CONFIDENCE" if needs_review else ""
-        print(f"      {clip.name} → @{account} ({confidence:.0%}){flag}")
+        flags = []
+        if needs_review:
+            flags.append("⚑ LOW CONFIDENCE")
+        if copyright_risk:
+            flags.append("© MUSIC RISK")
+        flag_str = "  " + "  ".join(flags) if flags else ""
+        print(f"      {clip.name} → @{account} ({confidence:.0%}){flag_str}")
 
     # 5. Write review queue
     print("[4/4] Writing review queue...")
@@ -323,12 +423,15 @@ def run_pipeline(url: str, output_root: Path, clip_duration: int = 45) -> dict:
         by_account[r["account"]] = by_account.get(r["account"], 0) + 1
 
     flagged = sum(1 for r in clip_results if r["needs_review"])
+    music_risk = sum(1 for r in clip_results if r["copyright_risk"])
     routing_summary = "  ".join(f"@{a}: {n}" for a, n in by_account.items())
 
     print(f"\n Done — {run_dir}")
     print(f"  {len(clips)} clips  {routing_summary}")
     if flagged:
         print(f"  ⚑ {flagged} clip(s) flagged for manual review")
+    if music_risk:
+        print(f"  © {music_risk} clip(s) flagged for copyright risk")
     print(f"  Review queue: {manifest_path}\n")
 
     return json.loads(manifest_path.read_text())
@@ -345,8 +448,9 @@ def main():
         epilog="""
 Examples:
   python pipeline.py https://www.youtube.com/watch?v=...
-  python pipeline.py https://www.tiktok.com/@user/video/... --clip-duration 30
-  python pipeline.py <url> --output runs/
+  python pipeline.py <url> --brands agent_maxxing
+  python pipeline.py <url> --brands agent_afterhours --series fastest_timeline
+  python pipeline.py <url> --clip-duration 30 --output runs/
         """,
     )
     parser.add_argument("url", help="Source video URL (YouTube, TikTok, Twitch, Kick, Instagram)")
@@ -357,6 +461,14 @@ Examples:
     parser.add_argument(
         "--output", default="output", metavar="DIR",
         help="Root output directory (default: output/)",
+    )
+    parser.add_argument(
+        "--brands", nargs="+", metavar="BRAND",
+        help="Restrict routing to these brand(s) only (default: all active brands)",
+    )
+    parser.add_argument(
+        "--series", default=None, metavar="NAME",
+        help='Tag all clips with a series name (e.g., "fastest_timeline")',
     )
     args = parser.parse_args()
 
@@ -371,7 +483,7 @@ Examples:
             print(f"  - {m}")
         print()
 
-    run_pipeline(args.url, Path(args.output), args.clip_duration)
+    run_pipeline(args.url, Path(args.output), args.clip_duration, brands=args.brands, series=args.series)
 
 
 if __name__ == "__main__":

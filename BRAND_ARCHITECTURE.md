@@ -202,6 +202,10 @@ Every Agent account functions as both a content property and a distribution node
 
 **Goal:** Input a video URL → output platform-ready clips, captions, hashtags, and scheduled posts for at least two accounts with minimal manual effort.
 
+> **Ref:** Content pillars, source lists, and per-brand posting frequencies are in `CONTENT_STRATEGY.md`.
+> Per-account daily/weekly SOPs are in `ACCOUNT_PLAYBOOKS.md`.
+> Ordered implementation task list is in `AUTOMATION_TASKS.md` and `EXECUTION_QUEUE.md`.
+
 ### Pipeline
 
 ```

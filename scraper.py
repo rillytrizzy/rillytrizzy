@@ -8,6 +8,8 @@ Usage:
     python scraper.py --platforms twitch kick            # pick platforms
     python scraper.py --period LAST_MONTH --games 15     # Twitch options
     python scraper.py --json out.json --csv out.csv      # custom output
+    python scraper.py --brand agent_maxxing --json clips_maxxing.json
+    python scraper.py --brand agent_afterhours --platforms twitch kick
 
 Period options (Twitch + Kick): LAST_DAY  LAST_WEEK  LAST_MONTH  ALL_TIME
 """
@@ -20,6 +22,7 @@ import time
 from typing import Optional
 
 import requests
+import yt_dlp
 
 # ── shared ────────────────────────────────────────────────────────────────────
 
@@ -38,6 +41,40 @@ def _get(url: str, headers: Optional[dict] = None, **kwargs) -> requests.Respons
     resp = requests.get(url, headers=h, timeout=15, **kwargs)
     resp.raise_for_status()
     return resp
+
+
+# ── Brand search query presets ────────────────────────────────────────────────
+
+BRAND_SEARCH_QUERIES: dict[str, list[str]] = {
+    "agent_maxxing": [
+        "AI agent demo 2026",
+        "Claude automation workflow",
+        "AI productivity hack tutorial",
+        "LLM tool walkthrough 2026",
+        "AI automation build log",
+    ],
+    "agent_afterhours": [
+        "EDC 2026 highlights",
+        "festival drop reaction",
+        "DJ set best moment 2026",
+        "AriAtHome highlights",
+        "Tomorrowland 2026 highlights",
+    ],
+    "agent_pastforward": [
+        "old prediction came true technology",
+        "retro futurism documentary",
+        "vintage future technology",
+        "they predicted smartphones history",
+        "forgotten technology documentary",
+    ],
+    "agent_viral": [
+        "best clip of the week",
+        "unexpected viral moment 2026",
+        "funny fail compilation 2026",
+        "crowd reaction compilation",
+        "unexpected moment compilation",
+    ],
+}
 
 
 # ── Twitch ────────────────────────────────────────────────────────────────────
@@ -328,6 +365,89 @@ def scrape_youtube(limit: int = 60, queries: Optional[list[str]] = None) -> list
     return result
 
 
+# ── YouTube search (brand-targeted via yt-dlp) ───────────────────────────────
+
+def scrape_youtube_search(query: str, limit: int = 10, brand: str = "") -> list[dict]:
+    """Search YouTube via yt-dlp ytsearch. Returns same schema as other scrapers."""
+    search_url = f"ytsearch{limit}:{query}"
+    ydl_opts = {
+        "quiet": True,
+        "no_warnings": True,
+        "extract_flat": "in_playlist",
+    }
+    clips: list[dict] = []
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(search_url, download=False)
+            entries = (info or {}).get("entries") or []
+            for entry in entries:
+                if not entry:
+                    continue
+                vid_id = entry.get("id", "")
+                clips.append({
+                    "platform": "youtube",
+                    "game": "",
+                    "clip_id": vid_id,
+                    "title": entry.get("title", ""),
+                    "channel": entry.get("channel") or entry.get("uploader", ""),
+                    "channel_url": entry.get("channel_url", ""),
+                    "creator": entry.get("channel") or entry.get("uploader", ""),
+                    "view_count": entry.get("view_count") or 0,
+                    "duration_sec": entry.get("duration") or 0,
+                    "created_at": entry.get("upload_date", ""),
+                    "url": (
+                        f"https://www.youtube.com/watch?v={vid_id}"
+                        if vid_id else entry.get("url", "")
+                    ),
+                    "thumbnail_url": entry.get("thumbnail", ""),
+                    "account": brand,
+                })
+    except Exception as exc:
+        print(f"  [YouTube Search] query={query!r} failed: {exc}")
+    return clips
+
+
+# ── Archive.org (agent_pastforward — public domain) ──────────────────────────
+
+def scrape_archive_org(query: str, limit: int = 10) -> list[dict]:
+    """Discover public domain video from Archive.org Prelinger Archives."""
+    clips: list[dict] = []
+    try:
+        resp = _get(
+            "https://archive.org/advancedsearch.php",
+            params={
+                "q": f"collection:prelinger {query}",
+                "fl[]": "identifier,title,description,date",
+                "rows": limit,
+                "output": "json",
+            },
+        )
+        docs = resp.json().get("response", {}).get("docs", [])
+        for doc in docs:
+            identifier = doc.get("identifier", "")
+            if not identifier:
+                continue
+            clips.append({
+                "platform": "archive.org",
+                "game": "",
+                "clip_id": identifier,
+                "title": doc.get("title", ""),
+                "channel": "Prelinger Archives",
+                "channel_url": f"https://archive.org/details/{identifier}",
+                "creator": "Prelinger Archives",
+                "view_count": 0,
+                "duration_sec": 0,
+                "created_at": doc.get("date", ""),
+                "url": f"https://archive.org/download/{identifier}/{identifier}.mp4",
+                "thumbnail_url": f"https://archive.org/services/img/{identifier}",
+                "license": "public_domain",
+                "account": "agent_pastforward",
+            })
+    except Exception as exc:
+        print(f"  [Archive.org] query={query!r} failed: {exc}")
+    return clips
+
+
 # ── combined ──────────────────────────────────────────────────────────────────
 
 
@@ -340,8 +460,12 @@ def scrape_all(
     yt_clips: int = 60,
     output_json: str = "clips.json",
     output_csv: str = "clips.csv",
+    extra_clips: Optional[list[dict]] = None,
 ) -> list[dict]:
     all_clips: list[dict] = []
+
+    if extra_clips:
+        all_clips.extend(extra_clips)
 
     if "twitch" in platforms:
         all_clips.extend(scrape_twitch(twitch_games, twitch_clips, period))
@@ -357,8 +481,9 @@ def scrape_all(
     print(f"\nSaved {len(all_clips)} clips -> {output_json}")
 
     if all_clips:
+        fieldnames = list(dict.fromkeys(k for c in all_clips for k in c))
         with open(output_csv, "w", newline="", encoding="utf-8") as fh:
-            writer = csv.DictWriter(fh, fieldnames=list(all_clips[0].keys()))
+            writer = csv.DictWriter(fh, fieldnames=fieldnames, extrasaction="ignore")
             writer.writeheader()
             writer.writerows(all_clips)
         print(f"Saved {len(all_clips)} clips -> {output_csv}")
@@ -366,9 +491,9 @@ def scrape_all(
     print("\nTop 10 clips across all platforms:")
     for i, clip in enumerate(all_clips[:10], 1):
         tag = clip["platform"].upper()
-        game = f" ({clip['game']})" if clip["game"] else ""
+        game = f" ({clip['game']})" if clip.get("game") else ""
         print(
-            f"  {i:2}. [{tag:7}] [{clip['view_count']:>9,} views] "
+            f"  {i:2}. [{tag:11}] [{clip['view_count']:>9,} views] "
             f"{clip['title']!r} — {clip['channel']}{game}"
         )
         print(f"       {clip['url']}")
@@ -385,9 +510,17 @@ def main() -> None:
     )
     parser.add_argument(
         "--platforms", nargs="+",
-        default=["twitch", "kick", "youtube"],
+        default=None,
         choices=["twitch", "kick", "youtube"],
-        help="Platforms to include (default: all three)",
+        help="Platforms to include (default: all three when --brand is not set)",
+    )
+    parser.add_argument(
+        "--brand", metavar="BRAND",
+        choices=list(BRAND_SEARCH_QUERIES.keys()),
+        help=(
+            "Run YouTube searches for a specific brand using BRAND_SEARCH_QUERIES. "
+            "Combine with --platforms to also run platform scrapers."
+        ),
     )
     parser.add_argument(
         "--period", default="LAST_WEEK",
@@ -408,8 +541,26 @@ def main() -> None:
                         help="CSV output file (default: clips.csv)")
     args = parser.parse_args()
 
+    # When --brand is set without explicit --platforms, don't run platform scrapers
+    if args.brand:
+        effective_platforms = args.platforms or []
+    else:
+        effective_platforms = args.platforms or ["twitch", "kick", "youtube"]
+
+    # Run brand YouTube searches if requested
+    brand_clips: list[dict] = []
+    if args.brand:
+        queries = BRAND_SEARCH_QUERIES[args.brand]
+        per_query = max(1, args.yt_clips // len(queries))
+        print(f"\n[Brand Search] @{args.brand} — running {len(queries)} queries...")
+        for q in queries:
+            results = scrape_youtube_search(q, limit=per_query, brand=args.brand)
+            brand_clips.extend(results)
+            print(f"  [{q!r}] {len(results)} clips")
+        print(f"  Total brand clips: {len(brand_clips)}")
+
     scrape_all(
-        platforms=args.platforms,
+        platforms=effective_platforms,
         period=args.period,
         twitch_games=args.games,
         twitch_clips=args.twitch_clips,
@@ -417,6 +568,7 @@ def main() -> None:
         yt_clips=args.yt_clips,
         output_json=args.json_out,
         output_csv=args.csv_out,
+        extra_clips=brand_clips or None,
     )
 
 

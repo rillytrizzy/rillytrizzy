@@ -20,6 +20,9 @@
 | X | Claim needed — note: @agentmaxxing (no underscore) is taken by unrelated account |
 | Threads | Claim needed |
 | Notes | Namespace conflicts on similar handles: @agentmaxx TikTok (54.6K followers), @agentmaxxing X (no underscore). Underscore handle @agent_maxxing is distinct and claimable. |
+| **Content Sources** | YouTube: Fireship, Matt Wolfe, AI Explained, Two Minute Papers, TheAIGrid, Andrej Karpathy, Lex Fridman (AI segments), Y Combinator |
+| **Scraper Command** | `python scraper.py --brand agent_maxxing --json clips_maxxing.json` |
+| **Pipeline Command** | `python pipeline.py <url> --brands agent_maxxing` |
 
 ---
 
@@ -36,6 +39,10 @@
 | X | Claim needed |
 | Threads | Claim needed |
 | Notes | TikTok dot-to-underscore rename is a cooldown issue only — account is secured. YouTube channel configuration depends on primary channel handle rename completing first. |
+| **Content Sources** | YouTube: EDC Las Vegas, AriAtHome, Tomorrowland, Ultra Music Festival, Coachella, DJ Mag |
+| **Copyright Note** | ⚠ HIGHEST copyright risk in network. All clips require human review before posting. |
+| **Scraper Command** | `python scraper.py --brand agent_afterhours --json clips_afterhours.json` |
+| **Pipeline Command** | `python pipeline.py <url> --brands agent_afterhours` |
 
 ---
 
@@ -71,6 +78,10 @@
 | X | Claim needed |
 | Threads | Claim needed |
 | Notes | Highest long-term content equity among reserved accounts. TikTok handle secured. Complete cross-platform coverage while the window is open. |
+| **Content Sources** | Archive.org Prelinger Archives (public domain), Wikimedia Commons (CC-licensed), NASA public domain, US Government NARA footage |
+| **YouTube Search** | "old prediction came true", "retro futurism", "vintage future technology", "forgotten technology documentary" |
+| **Scraper Command** | `python scraper.py --brand agent_pastforward --json clips_pastforward.json` |
+| **Pipeline Command** | `python pipeline.py <url> --brands agent_pastforward --series fastest_timeline` |
 
 ---
 
@@ -79,14 +90,17 @@
 |---|---|
 | Handle | agent_viral |
 | Purpose | Viral clips, broad entertainment, reaction content |
-| Status | **RESERVED** |
-| Priority | Tier 2 — claim all platforms; do not activate yet |
-| TikTok | Not yet created |
+| Status | **ACTIVE** |
+| Priority | Tier 1 |
+| TikTok | **SECURED** — current username: agent.trending (dot). Rename to agent_viral queued pending cooldown |
 | YouTube | YouTube channel exists (created alongside Agent Maxxing) |
 | Instagram | Claim needed |
 | X | Claim needed |
 | Threads | Claim needed |
-| Notes | YouTube channel exists. TikTok and remaining platforms need accounts created. Do not activate until automation MVP is proven on agent_maxxing and agent_afterhours. |
+| Notes | TikTok account secured as agent.trending (repurposed from retired agent_trending). Underscore rename to agent_viral queued. |
+| **Content Sources** | Twitch top game clips (LAST_WEEK), Kick trending clips, YouTube: "unexpected viral moment", "best clip week" |
+| **Scraper Command** | `python scraper.py --platforms twitch kick --json clips_viral.json` |
+| **Pipeline Command** | `python pipeline.py <url> --brands agent_viral` |
 
 ---
 

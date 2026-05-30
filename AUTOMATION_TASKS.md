@@ -250,14 +250,14 @@ python -c "import json; q=json.load(open('output/<run_id>/review_queue.json')); 
 
 | Priority | ID | Task | Operator | Status |
 |---|---|---|---|---|
-| 1 | T05, T07 | Update routing niche + pillars | Codex | PENDING |
-| 2 | T09 | Add --brands to pipeline.py | Codex | PENDING |
-| 3 | T10, T11, T12 | YouTube search scraper + --brand | Codex | PENDING |
-| 4 | T08 | Copyright risk flag | Codex | PENDING |
-| 5 | T17 | Add --series to pipeline.py | Codex | PENDING |
-| 6 | T13 | Archive.org scraper stub | Codex | PENDING |
-| 7 | T16 | Draft Episode 1 outline | Claude / Human | PENDING |
-| 8 | T06 | Add sources field to ACCOUNT_PROFILES | Codex | PENDING |
+| 1 | T05, T07 | Update routing niche + pillars | Claude | **COMPLETE** |
+| 2 | T09 | Add --brands to pipeline.py | Claude | **COMPLETE** |
+| 3 | T10, T11, T12 | YouTube search scraper + --brand | Claude | **COMPLETE** |
+| 4 | T08 | Copyright risk flag | Claude | **COMPLETE** |
+| 5 | T17 | Add --series to pipeline.py | Claude | **COMPLETE** |
+| 6 | T13 | Archive.org scraper stub | Claude | **COMPLETE** |
+| 7 | T16 | Draft Episode 1 outline | Claude | **COMPLETE** |
+| 8 | T06 | Add sources field to ACCOUNT_PROFILES | Claude | **COMPLETE** |
 
 
 ---
