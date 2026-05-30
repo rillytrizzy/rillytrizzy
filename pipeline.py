@@ -50,9 +50,9 @@ ACCOUNT_PROFILES = {
         "default_hashtags": ["#history", "#AgentPastForward", "#technology", "#futureforecasting"],
     },
     "agent_viral": {
-        "niche": "viral clips, entertaining content, broad reach",
+        "niche": "viral clips, broad entertainment, reaction content",
         "status": "RESERVED",
-        "default_hashtags": ["#viral", "#AgentViral", "#fyp", "#trending"],
+        "default_hashtags": ["#viral", "#AgentViral", "#fyp", "#entertainment"],
     },
     "agent_trending": {
         "niche": "current trends, internet culture, news-driven social content",

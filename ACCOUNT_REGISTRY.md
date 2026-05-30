@@ -1,7 +1,7 @@
 # Agent Network — Account Registry
-**Version:** 1.0
+**Version:** 1.1
 **Date:** 2026-05-30
-**Architecture ref:** BRAND_ARCHITECTURE.md v1.0 (LOCKED)
+**Architecture ref:** BRAND_ARCHITECTURE.md v1.1
 
 ---
 
@@ -13,9 +13,13 @@
 | Handle | agent_maxxing |
 | Purpose | AI, agents, automation, productivity, future-of-work content |
 | Status | **ACTIVE** |
-| Priority | Tier 1 — Protect and complete cross-platform coverage |
-| Platforms | TikTok (active), YouTube (handle rename required), Instagram (claim), X (claim), Threads (claim) |
-| Notes | YouTube channel exists at @agent_afterhours — rename handle to @agent_maxxing immediately. Namespace conflict: @agentmaxx on TikTok (54.6K followers, different account) and @agentmaxxing on X (no underscore, different account). Underscore handle @agent_maxxing remains claimable on X. |
+| Priority | Tier 1 |
+| TikTok | **SECURED** — underscore handle correct |
+| YouTube | Channel "Agent Maxxing" exists — handle currently @agent_afterhours (cooldown pending rename to @agent_maxxing) |
+| Instagram | Claim needed |
+| X | Claim needed — note: @agentmaxxing (no underscore) is taken by unrelated account |
+| Threads | Claim needed |
+| Notes | Namespace conflicts on similar handles: @agentmaxx TikTok (54.6K followers), @agentmaxxing X (no underscore). Underscore handle @agent_maxxing is distinct and claimable. |
 
 ---
 
@@ -25,9 +29,13 @@
 | Handle | agent_afterhours |
 | Purpose | EDM, festivals, dance, nightlife, music culture |
 | Status | **ACTIVE** |
-| Priority | Tier 1 — Protect existing; expand to remaining platforms |
-| Platforms | Instagram (active), YouTube (new channel — future), TikTok (claim), X (claim), Threads (claim) |
-| Notes | Instagram is active and secured. YouTube channel will be created as a separate property when After Hours content track is ready. Do not use existing YouTube channel — that becomes @agent_maxxing. |
+| Priority | Tier 1 |
+| TikTok | **SECURED** — current username: agent.afterhours (dot). Rename to agent_afterhours queued pending cooldown |
+| YouTube | Empty channel exists — to be configured as "Agent After Hours" once @agent_afterhours handle is freed from primary channel |
+| Instagram | Claim needed |
+| X | Claim needed |
+| Threads | Claim needed |
+| Notes | TikTok dot-to-underscore rename is a cooldown issue only — account is secured. YouTube channel configuration depends on primary channel handle rename completing first. |
 
 ---
 
@@ -37,9 +45,14 @@
 | Handle | rillytrizzy |
 | Purpose | Founder identity, music releases, creator journey, personal brand |
 | Status | **ACTIVE** |
-| Priority | Tier 1 — Rename @agent_rillytrizzy → @rillytrizzy on Instagram; claim on all platforms |
-| Platforms | Instagram (rename required from @agent_rillytrizzy), TikTok (claim), X (claim), Threads (claim), music platforms (Spotify, SoundCloud, Apple Music) |
-| Notes | No confirmed conflicts found on major platforms. Rename Instagram immediately — this is a Tier 1 action. |
+| Priority | Medium — secure after core Agent network handles |
+| TikTok | Claim needed |
+| YouTube | — |
+| Instagram | Claim needed (was @agent_rillytrizzy — verify current status) |
+| X | Claim needed |
+| Threads | Claim needed |
+| Music Platforms | Claim on Spotify for Artists, SoundCloud, Apple Music for Artists |
+| Notes | Not a network account — founder layer only. Secure after agent_maxxing, agent_afterhours, agent_pastforward, agent_viral, and agent_trending handles are all claimed. |
 
 ---
 
@@ -51,9 +64,13 @@
 | Handle | agent_pastforward |
 | Purpose | History, forgotten technology, old predictions, future forecasting |
 | Status | **RESERVED** |
-| Priority | Tier 1 — Claim handles now; do NOT activate until agent_maxxing + agent_afterhours are producing consistently |
-| Platforms | TikTok, Instagram, YouTube, X, Threads (all to be claimed) |
-| Notes | No existing accounts found with this handle on any platform. Claim window is open. Highest long-term equity of the reserved accounts — claim before this changes. |
+| Priority | Tier 1 — claim everywhere now; do NOT publish until agent_maxxing + agent_afterhours are producing consistently |
+| TikTok | **SECURED** |
+| YouTube | Claim needed |
+| Instagram | Claim needed |
+| X | Claim needed |
+| Threads | Claim needed |
+| Notes | Highest long-term content equity among reserved accounts. TikTok handle secured. Complete cross-platform coverage while the window is open. |
 
 ---
 
@@ -61,11 +78,15 @@
 | Field | Value |
 |---|---|
 | Handle | agent_viral |
-| Purpose | Viral clips, broad entertainment, high-reach content |
+| Purpose | Viral clips, broad entertainment, reaction content |
 | Status | **RESERVED** |
-| Priority | Tier 2 — Reserve when bandwidth allows; do not activate yet |
-| Platforms | TikTok, Instagram, YouTube, X, Threads (all to be claimed) |
-| Notes | No existing accounts found. Note: @viralagents exists on Instagram (different handle). agent_viral handle itself appears unclaimed. |
+| Priority | Tier 2 — claim all platforms; do not activate yet |
+| TikTok | Not yet created |
+| YouTube | YouTube channel exists (created alongside Agent Maxxing) |
+| Instagram | Claim needed |
+| X | Claim needed |
+| Threads | Claim needed |
+| Notes | YouTube channel exists. TikTok and remaining platforms need accounts created. Do not activate until automation MVP is proven on agent_maxxing and agent_afterhours. |
 
 ---
 
@@ -75,9 +96,13 @@
 | Handle | agent_trending |
 | Purpose | Current trends, internet culture, news-driven social content |
 | Status | **RESERVED** |
-| Priority | Tier 2 — Reserve when bandwidth allows; do not activate yet |
-| Platforms | TikTok, Instagram, YouTube, X, Threads (all to be claimed) |
-| Notes | No existing accounts found with this handle. |
+| Priority | Tier 1 on TikTok (secured); Tier 2 on remaining platforms |
+| TikTok | **SECURED** — current username: agent.trending (dot). Rename to agent_trending queued pending cooldown |
+| YouTube | Claim needed |
+| Instagram | Claim needed |
+| X | Claim needed |
+| Threads | Claim needed |
+| Notes | TikTok account secured as agent.trending. Underscore rename queued. All other platforms need accounts created. Do not activate until agent_pastforward is producing consistently. |
 
 ---
 
@@ -85,45 +110,52 @@
 
 | Domain | Status | Action |
 |---|---|---|
-| agentmaxxing.com | VERIFY (likely taken — concept is spreading) | Check registrar; if taken, acquire agentmaxxing.co or agentmaxxing.io |
-| agentmaxxing.co | FOR SALE (listed on Spaceship) | Purchase if agentmaxxing.com unavailable |
+| agentmaxxing.com | VERIFY URGENTLY — concept spreading fast | Check registrar; if taken, acquire agentmaxxing.co (listed for sale) |
+| agentmaxxing.co | For sale on Spaceship | Purchase as fallback if .com unavailable |
 | agentafterhours.com | Unknown — no conflicts found | Check and claim |
-| agentpastforward.com | Unknown — no conflicts found | Check and claim (Tier 1 priority) |
-| rillytrizzy.com | Unknown — no conflicts found | Check and claim |
-| agentviral.com | Unknown | Check and claim (Tier 2) |
-| agenttrending.com | Unknown | Check and claim (Tier 2) |
+| agentpastforward.com | Unknown — no conflicts found | Check and claim |
+| agentviral.com | Unknown | Check and claim |
+| agenttrending.com | Unknown | Check and claim |
+| rillytrizzy.com | Unknown — no conflicts found | Check and claim after core network domains secured |
 
 ---
 
 ## NAMESPACE CONFLICTS LOG
 
-| Conflicting Handle | Platform | Notes |
-|---|---|---|
-| @agentmaxx | TikTok | 54.6K followers — different handle (no underscore, no 'ing') |
-| @agentmaxxing | X | Active account — different handle (no underscore) |
-| agentmaxing.com | Domain | Business service (one 'x') — different spelling |
-| @viralagents | Instagram | Different handle — not a conflict |
-| @weare.afterhours | Instagram | Different handle — not a conflict |
+| Conflicting Handle | Platform | Risk Level | Notes |
+|---|---|---|---|
+| @agentmaxxing | X | Low | No underscore — distinct handle; @agent_maxxing (underscore) remains claimable |
+| @agentmaxx | TikTok | Low | Different handle entirely (no underscore, no 'ing') — 54.6K followers |
+| agentmaxing.com | Domain | Low | Business service, one-x spelling — different enough |
+| @viralagents | Instagram | None | Different handle entirely |
+| @weare.afterhours | Instagram | None | Different handle entirely |
 
-**Assessment:** No direct handle conflicts for @agent_maxxing (underscore) on any platform. The conflicts are on similar but distinct handles. The underscore convention protects the namespace.
+**Assessment:** No direct conflicts on the exact underscore handles. The underscore convention creates a clean namespace separation from all known conflicts.
 
 ---
 
 ## REGISTRY STATUS
 
-- [ ] agent_maxxing — YouTube handle renamed to @agent_maxxing
-- [ ] agent_maxxing — Instagram claimed
-- [ ] agent_maxxing — X claimed (@agent_maxxing with underscore)
-- [ ] agent_maxxing — Threads claimed
-- [ ] agent_afterhours — TikTok claimed
-- [ ] agent_afterhours — X claimed
-- [ ] agent_afterhours — Threads claimed
-- [ ] rillytrizzy — Instagram renamed from @agent_rillytrizzy
-- [ ] rillytrizzy — TikTok claimed
-- [ ] rillytrizzy — X claimed
-- [ ] rillytrizzy — Music platforms claimed
-- [ ] agent_pastforward — All platforms claimed (TikTok, Instagram, YouTube, X, Threads)
-- [ ] agent_viral — All platforms claimed
-- [ ] agent_trending — All platforms claimed
-- [ ] agentmaxxing.com (or .co) — Domain secured
-- [ ] rillytrizzy.com — Domain secured
+### Secured
+- [x] agent_maxxing — TikTok
+- [x] agent_afterhours — TikTok (as agent.afterhours — rename pending)
+- [x] agent_pastforward — TikTok
+- [x] agent_trending — TikTok (as agent.trending — rename pending)
+- [x] Agent Maxxing — YouTube channel exists
+- [x] Agent Viral — YouTube channel exists
+- [x] Agent After Hours — YouTube empty channel exists (pending configuration)
+
+### Pending Cooldowns
+- [ ] YouTube: rename handle @agent_afterhours → @agent_maxxing
+- [ ] YouTube: configure empty channel as "Agent After Hours" at @agent_afterhours
+- [ ] TikTok: rename agent.afterhours → agent_afterhours
+- [ ] TikTok: rename agent.trending → agent_trending
+
+### Pending Claim
+- [ ] agent_maxxing — Instagram, X, Threads
+- [ ] agent_afterhours — Instagram, X, Threads
+- [ ] agent_pastforward — Instagram, YouTube, X, Threads
+- [ ] agent_viral — TikTok, Instagram, X, Threads
+- [ ] agent_trending — Instagram, YouTube, X, Threads
+- [ ] rillytrizzy — TikTok, Instagram, X, Threads, music platforms
+- [ ] Domains: agentmaxxing.com/.co, agentafterhours.com, agentpastforward.com, agentviral.com, agenttrending.com, rillytrizzy.com
