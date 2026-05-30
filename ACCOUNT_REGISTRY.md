@@ -104,19 +104,15 @@
 
 ---
 
-### agent_trending
+### ~~agent_trending~~ — RETIRED
+
 | Field | Value |
 |---|---|
 | Handle | agent_trending |
-| Purpose | Current trends, internet culture, news-driven social content |
-| Status | **RESERVED** |
-| Priority | Tier 1 on TikTok (secured); Tier 2 on remaining platforms |
-| TikTok | **SECURED** — current username: agent.trending (dot). Rename to agent_trending queued pending cooldown |
-| YouTube | Claim needed |
-| Instagram | Claim needed |
-| X | Claim needed |
-| Threads | Claim needed |
-| Notes | TikTok account secured as agent.trending. Underscore rename queued. All other platforms need accounts created. Do not activate until agent_pastforward is producing consistently. |
+| Status | **RETIRED** — do not create new handles; do not route content here |
+| TikTok | Repurposed — account.trending account is now agent_viral (rename to agent_viral pending cooldown) |
+| All other platforms | Do not claim — niche absorbed into agent_viral |
+| Notes | agent_trending was retired in favour of agent_viral. The TikTok account (agent.trending) has been repurposed and will be renamed to agent_viral once the cooldown clears. No handles to claim on any other platform. |
 
 ---
 
@@ -154,7 +150,7 @@
 - [x] agent_maxxing — TikTok
 - [x] agent_afterhours — TikTok (as agent.afterhours — rename pending)
 - [x] agent_pastforward — TikTok
-- [x] agent_trending — TikTok (as agent.trending — rename pending)
+- [x] agent_viral — TikTok (as agent.trending — repurposed; rename to agent_viral pending cooldown)
 - [x] Agent Maxxing — YouTube channel exists
 - [x] Agent Viral — YouTube channel exists
 - [x] Agent After Hours — YouTube empty channel exists (pending configuration)
@@ -163,13 +159,13 @@
 - [ ] YouTube: rename handle @agent_afterhours → @agent_maxxing
 - [ ] YouTube: configure empty channel as "Agent After Hours" at @agent_afterhours
 - [ ] TikTok: rename agent.afterhours → agent_afterhours
-- [ ] TikTok: rename agent.trending → agent_trending
+- [ ] TikTok: rename agent.trending → agent_viral (repurposed from retired agent_trending)
 
 ### Pending Claim
 - [ ] agent_maxxing — Instagram, X, Threads
 - [ ] agent_afterhours — Instagram, X, Threads
 - [ ] agent_pastforward — Instagram, YouTube, X, Threads
-- [ ] agent_viral — TikTok, Instagram, X, Threads
-- [ ] agent_trending — Instagram, YouTube, X, Threads
+- [ ] agent_viral — Instagram, X, Threads (TikTok secured as agent.trending — rename pending)
 - [ ] rillytrizzy — TikTok, Instagram, X, Threads, music platforms
-- [ ] Domains: agentmaxxing.com/.co, agentafterhours.com, agentpastforward.com, agentviral.com, agenttrending.com, rillytrizzy.com
+- [ ] Domains: agentmaxxing.com/.co, agentafterhours.com, agentpastforward.com, agentviral.com, rillytrizzy.com
+- ~~agent_trending — RETIRED. No handles to claim.~~

@@ -104,8 +104,8 @@ Begins when Phase 1 (handles) and Phase 4 (env) are complete.
 | Phase | Status | Blocker |
 |---|---|---|
 | 0 — Unblock | WAITING | YouTube + TikTok cooldowns |
-| 1 — Handle acquisition | READY | None — execute now |
-| 2 — Code | READY | None — execute now |
-| 3 — File updates | READY | None — execute now |
-| 4 — Env setup | READY | Requires API keys |
+| 1 — Handle acquisition | IN PROGRESS | Human action required |
+| 2 — Code | **COMPLETE** | — |
+| 3 — File updates | **COMPLETE** | — |
+| 4 — Env setup | READY | Add API keys to .env |
 | 5 — Operations | BLOCKED | Phases 1 + 4 must complete first |

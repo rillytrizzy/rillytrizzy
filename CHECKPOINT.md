@@ -8,10 +8,13 @@
 
 ```
 DATE:        2026-05-30
-PHASE:       Phase 1 — Handle Acquisition + Automation Build (parallel)
+PHASE:       Phase 1 (handle acquisition, human) + Phase 4 (API keys, human) — code complete
 MILESTONE:   0 / 100 posts network-wide
 BLOCKERS:    YouTube cooldown, TikTok cooldown, API keys not set
-NEXT ACTION: Claim Instagram/X/Threads for agent_maxxing, agent_afterhours, agent_viral
+CODE STATUS: ALL automation tasks complete (T05–T13, T16, T17)
+NEXT ACTION: 1) Add OPENAI_API_KEY + ANTHROPIC_API_KEY to .env
+             2) Smoke test: python pipeline.py <test_url> --brands agent_maxxing
+             3) Claim Instagram/X/Threads for agent_maxxing, agent_afterhours, agent_viral
 ```
 
 ---
@@ -61,24 +64,24 @@ NEXT ACTION: Claim Instagram/X/Threads for agent_maxxing, agent_afterhours, agen
 
 ---
 
-## AUTOMATION BUILD ORDER
-
-Run Codex prompts from `CODEX_TASK_PROMPTS.md` in this exact order:
+## AUTOMATION BUILD ORDER — ALL COMPLETE ✓
 
 ```
-1. T05/T07   →  pipeline.py: niche descriptions + content pillar routing prompt
-2. T09       →  pipeline.py: --brands CLI argument
-3. T10/T11/T12 → scraper.py: YouTube search function + brand presets + --brand arg
-4. T08       →  pipeline.py: copyright risk flag
-5. T17       →  pipeline.py: --series CLI argument
-6. T13       →  scraper.py: Archive.org scraper stub (agent_pastforward only)
+✓ T05/T07   →  pipeline.py: niche descriptions + content pillar routing prompt
+✓ T06       →  pipeline.py: sources field per account
+✓ T09       →  pipeline.py: --brands CLI argument
+✓ T08       →  pipeline.py: copyright_risk flag (URL pre-screen + Claude transcript analysis)
+✓ T17       →  pipeline.py: --series CLI argument + series field in manifest
+✓ T10/T11/T12 → scraper.py: scrape_youtube_search() + BRAND_SEARCH_QUERIES + --brand arg
+✓ T13       →  scraper.py: scrape_archive_org() — Prelinger Archives (agent_pastforward)
+✓ T16       →  EP01_computing_1950_2026.md: Episode 1 outline drafted
 ```
 
 **Current pipeline.py state:**
-- agent_viral: ACTIVE ✓ (updated this session)
-- agent_trending: REMOVED ✓ (retired, removed from ACCOUNT_PROFILES)
 - ACTIVE_ACCOUNTS = [agent_maxxing, agent_afterhours, agent_viral]
-- T05–T13: PENDING (niche strings, --brands, --brand, copyright flag not yet implemented)
+- agent_trending: RETIRED ✓ (removed from ACCOUNT_PROFILES)
+- All T05–T17 code tasks: COMPLETE ✓
+- Awaiting: OPENAI_API_KEY + ANTHROPIC_API_KEY in .env → then smoke test
 
 ---
 
@@ -110,11 +113,12 @@ Count files in those directories to track progress.
 | `CLAUDE_TASK_PROMPTS.md` | Copy-paste prompts for Claude (content) | 2026-05-30 |
 | `CODEX_TASK_PROMPTS.md` | Copy-paste prompts for Codex (code) | 2026-05-30 |
 | `AUTOMATION_TASKS.md` | T04–T18 with dependencies + acceptance criteria | 2026-05-30 |
-| `pipeline.py` | Main automation pipeline | 2026-05-30 |
-| `scraper.py` | Source discovery (Twitch, Kick, YouTube) | 2026-05-30 |
+| `pipeline.py` | Main automation pipeline — T05–T09, T17 complete | 2026-05-30 |
+| `scraper.py` | Source discovery — Twitch, Kick, YouTube + brand search + Archive.org | 2026-05-30 |
 | `content_calendar/TEMPLATE.md` | Post tracking template | 2026-05-30 |
 | `content_calendar/agent_pastforward/fastest_timeline/ROADMAP.md` | 30-episode campaign roadmap | 2026-05-30 |
-| `content_calendar/agent_pastforward/fastest_timeline/EPISODE_TEMPLATE.md` | Per-episode production template | 2026-05-30 |
+| `content_calendar/agent_pastforward/fastest_timeline/EPISODE_TEMPLATE.md` | Per-episode production template (blank) | 2026-05-30 |
+| `content_calendar/agent_pastforward/fastest_timeline/EP01_computing_1950_2026.md` | Episode 1 full outline — Computing 1950–2026 | 2026-05-30 |
 
 ---
 
@@ -158,3 +162,6 @@ After any downtime, do this in order:
 | 2026-05-30 | agent.trending TikTok repurposed | Will be renamed to agent_viral after cooldown |
 | 2026-05-30 | First milestone set: 100 posts | Tracked in content_calendar/ |
 | 2026-05-30 | Posting frequencies locked | agent_viral 42/week, maxxing 25/week, afterhours 18/week |
+| 2026-05-30 | T05–T17 all complete | pipeline.py: pillars, copyright_risk, --brands, --series; scraper.py: scrape_youtube_search, BRAND_SEARCH_QUERIES, --brand, scrape_archive_org |
+| 2026-05-30 | EP01 outline drafted | content_calendar/agent_pastforward/fastest_timeline/EP01_computing_1950_2026.md |
+| 2026-05-30 | ACCOUNT_REGISTRY.md updated | Source lists + scraper/pipeline commands per account; agent_trending marked RETIRED |
