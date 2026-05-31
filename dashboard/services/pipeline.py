@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import subprocess
 import sys
 from datetime import datetime, timedelta
 
@@ -26,11 +27,11 @@ def get_log() -> list[dict]:
     return list(reversed(_LOG))
 
 
-def run_pipeline_cycle():
+def run_pipeline_cycle(force: bool = False):
     db = SessionLocal()
     try:
         enabled = _get_setting(db, "auto_pipeline_enabled", "false")
-        if enabled != "true":
+        if enabled != "true" and not force:
             return
 
         _log("Pipeline cycle started")
@@ -38,9 +39,9 @@ def run_pipeline_cycle():
         auto_scrape = _get_setting(db, "auto_scrape_on_pipeline", "false")
         if auto_scrape == "true":
             try:
-                sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-                from scraper import main as scraper_main
-                scraper_main()
+                import subprocess
+                project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                subprocess.run([sys.executable, "scraper.py"], cwd=project_root, timeout=300, check=True)
                 _log("Scraper refresh completed")
             except Exception as e:
                 _log(f"Scraper refresh failed: {e}")

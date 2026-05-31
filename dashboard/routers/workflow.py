@@ -57,3 +57,25 @@ async def workflow_page(request: Request, db: Session = Depends(get_db)):
 @router.get("/api/workflow/status")
 async def workflow_status(db: Session = Depends(get_db)):
     return _workflow_state(db)
+
+
+@router.post("/api/workflow/scrape")
+async def scrape_now():
+    import subprocess
+    import sys
+    import threading
+
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    def _run():
+        try:
+            subprocess.run(
+                [sys.executable, "scraper.py"],
+                cwd=project_root,
+                timeout=300,
+            )
+        except Exception as e:
+            print(f"[scrape_now] {e}")
+
+    threading.Thread(target=_run, daemon=True).start()
+    return {"ok": True, "message": "Scraper started"}

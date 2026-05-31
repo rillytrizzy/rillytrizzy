@@ -71,7 +71,7 @@ async def disable_pipeline(db: Session = Depends(get_db)):
 async def run_now():
     import threading
     from dashboard.services.pipeline import run_pipeline_cycle
-    threading.Thread(target=run_pipeline_cycle, daemon=True).start()
+    threading.Thread(target=lambda: run_pipeline_cycle(force=True), daemon=True).start()
     return {"ok": True, "message": "Pipeline cycle triggered"}
 
 
