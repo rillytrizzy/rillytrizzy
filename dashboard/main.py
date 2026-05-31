@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from dashboard.database import init_db
-from dashboard.routers import clips, jobs, pipeline, schedules, settings
+from dashboard.routers import clips, jobs, pipeline, schedules, settings, workflow
 from dashboard.services import scheduler as sched_service
 
 
@@ -28,6 +28,7 @@ app.include_router(jobs.router)
 app.include_router(schedules.router)
 app.include_router(pipeline.router)
 app.include_router(settings.router)
+app.include_router(workflow.router)
 
 
 @app.get("/", response_class=HTMLResponse)

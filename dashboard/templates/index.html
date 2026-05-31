@@ -26,6 +26,37 @@
   </div>
 </div>
 
+<!-- Workflow mini-strip -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl p-4 mb-6">
+  <div class="flex items-center justify-between mb-3">
+    <h2 class="text-sm font-semibold text-gray-300">Workflow Status</h2>
+    <a href="/workflow" class="text-xs text-brand-light hover:underline">Open full workflow →</a>
+  </div>
+  <div class="flex items-center gap-2 overflow-x-auto">
+    <div class="flex flex-col items-center shrink-0 bg-gray-800 rounded-lg px-4 py-2 min-w-[80px]">
+      <span class="text-xs text-gray-500 mb-1">Clips</span>
+      <span class="text-xl font-bold text-blue-400">{{ total_clips }}</span>
+    </div>
+    <span class="text-gray-700 shrink-0">→</span>
+    <div class="flex flex-col items-center shrink-0 bg-gray-800 rounded-lg px-4 py-2 min-w-[80px]">
+      <span class="text-xs text-gray-500 mb-1">Generating</span>
+      <span class="text-xl font-bold text-brand-light">{{ active_jobs }}</span>
+    </div>
+    <span class="text-gray-700 shrink-0">→</span>
+    <div class="flex flex-col items-center shrink-0 bg-gray-800 rounded-lg px-4 py-2 min-w-[80px]">
+      <span class="text-xs text-gray-500 mb-1">Scheduled</span>
+      <span class="text-xl font-bold text-yellow-400">{{ pending_posts }}</span>
+    </div>
+    <span class="text-gray-700 shrink-0">→</span>
+    <div class="flex flex-col items-center shrink-0 bg-gray-800 rounded-lg px-4 py-2 min-w-[80px] {% if pipeline_enabled %}border border-green-700{% endif %}">
+      <span class="text-xs text-gray-500 mb-1">Auto Post</span>
+      <span class="text-sm font-bold {% if pipeline_enabled %}text-green-400{% else %}text-gray-600{% endif %}">
+        {{ '● ON' if pipeline_enabled else '○ OFF' }}
+      </span>
+    </div>
+  </div>
+</div>
+
 <!-- Quick generate -->
 <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8" x-data="{ open: false }">
   <div class="flex items-center justify-between">
