@@ -32,8 +32,8 @@
         <p id="wf-clips" class="text-4xl font-bold text-blue-400">{{ state.clips }}</p>
         <p class="text-xs text-gray-500 mt-1">clips in library</p>
       </div>
-      <button hx-post="/api/pipeline/run_now" hx-swap="none"
-              @htmx:after-request="$dispatch('flash', {msg: 'Scraper + pipeline triggered!', type: 'ok'})"
+      <button hx-post="/api/workflow/scrape" hx-swap="none"
+              @htmx:after-request="$dispatch('flash', {msg: 'Scraper running in background!', type: 'ok'})"
               class="w-full text-xs bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
         ▶ Scrape Now
       </button>
