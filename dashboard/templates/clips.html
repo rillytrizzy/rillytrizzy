@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Clips — Higgsfield{% endblock %}
+{% block content %}
+
+<div x-data="{
+  platform: 'all',
+  search: '',
+  modalOpen: false,
+  activeClip: null,
+  prompt: 'Transform this gaming clip into a cinematic highlight reel with dynamic cuts and epic music.',
+  style: 'cinematic',
+  get filtered() {
+    return {{ clips | tojson }}.filter(c => {
+      if (this.platform !== 'all' && c.platform !== this.platform) return false;
+      if (this.search && !c.title?.toLowerCase().includes(this.search.toLowerCase()) && !c.channel?.toLowerCase().includes(this.search.toLowerCase())) return false;
+      return true;
+    });
+  }
+}">
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Clip Browser</h1>
+  <span class="text-sm text-gray-500" x-text="filtered.length + ' clips'"></span>
+</div>
+
+<!-- Filters -->
+<div class="flex flex-wrap gap-3 mb-6">
+  <div class="flex gap-1 bg-gray-900 border border-gray-800 rounded-lg p-1">
+    {% for p in ['all', 'twitch', 'kick', 'youtube'] %}
+    <button @click="platform = '{{ p }}'"
+            :class="platform === '{{ p }}' ? 'bg-brand text-white' : 'text-gray-400 hover:text-white'"
+            class="px-3 py-1 rounded-md text-sm transition-colors capitalize">{{ p }}</button>
+    {% endfor %}
+  </div>
+  <input x-model="search" type="text" placeholder="Search clips…"
+         class="bg-gray-900 border border-gray-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-brand">
+</div>
+
+<!-- Grid -->
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <template x-for="clip in filtered" :key="clip.clip_id">
+    <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden flex flex-col">
+      <div class="relative aspect-video bg-gray-800">
+        <img :src="clip.thumbnail_url || ''" class="w-full h-full object-cover" alt=""
+             @error="$el.style.display='none'">
+        <span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded"
+              x-text="clip.duration_sec + 's'"></span>
+        <span class="absolute top-1 left-1 text-xs px-1.5 py-0.5 rounded font-medium capitalize"
+              :class="{'bg-purple-700':clip.platform==='twitch','bg-green-700':clip.platform==='kick','bg-red-700':clip.platform==='youtube'}"
+              x-text="clip.platform"></span>
+      </div>
+      <div class="p-3 flex flex-col flex-1">
+        <p class="text-sm font-medium line-clamp-2 mb-1" x-text="clip.title"></p>
+        <p class="text-xs text-gray-500" x-text="clip.channel + ' · ' + (clip.view_count || 0).toLocaleString() + ' views'"></p>
+        <div class="mt-auto pt-3 flex gap-2">
+          <a :href="clip.url" target="_blank"
+             class="flex-1 text-center text-xs border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-white rounded-lg py-1.5 transition-colors">
+            Preview
+          </a>
+          <button @click="activeClip = clip; modalOpen = true"
+                  class="flex-1 text-xs bg-brand hover:bg-brand-dark text-white rounded-lg py-1.5 transition-colors">
+            Transform
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>
+
+<!-- Transform modal -->
+<div x-show="modalOpen" x-transition.opacity class="fixed inset-0 z-40 bg-black/60 flex items-center justify-center p-4" @click.self="modalOpen=false">
+  <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl">
+    <h2 class="font-semibold text-lg mb-1">Transform with Higgsfield</h2>
+    <p class="text-sm text-gray-400 mb-4 truncate" x-text="activeClip?.title"></p>
+    <form :hx-post="'/api/clips/' + (activeClip?.clip_id || '') + '/transform'"
+          hx-target="#jobs-toast"
+          hx-swap="innerHTML"
+          @htmx:after-request="modalOpen=false; $dispatch('flash', {msg:'Job submitted!', type:'ok'})"
+          class="space-y-3">
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Prompt</label>
+        <textarea name="prompt" rows="3" x-model="prompt"
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand resize-none"></textarea>
+      </div>
+      <div>
+        <label class="text-xs text-gray-400 mb-1 block">Style</label>
+        <select name="style" x-model="style"
+                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand">
+          <option value="cinematic">Cinematic</option>
+          <option value="anime">Anime</option>
+          <option value="neon">Neon / Cyberpunk</option>
+          <option value="vintage">Vintage</option>
+        </select>
+      </div>
+      <div class="flex gap-3 pt-1">
+        <button type="button" @click="modalOpen=false"
+                class="flex-1 border border-gray-700 text-gray-400 hover:text-white rounded-lg py-2 text-sm transition-colors">
+          Cancel
+        </button>
+        <button type="submit"
+                class="flex-1 bg-brand hover:bg-brand-dark text-white rounded-lg py-2 text-sm font-medium transition-colors">
+          Submit Job
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="jobs-toast"></div>
+
+</div>
+{% endblock %}

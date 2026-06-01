@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}Workflow — Higgsfield{% endblock %}
+{% block content %}
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Higgsfield Workflow</h1>
+  <div class="flex items-center gap-3">
+    <span class="text-xs text-gray-500">Auto-updates every 10s</span>
+    <div id="wf-live-dot" class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+  </div>
+</div>
+
+<!-- Step pipeline -->
+<div id="workflow-steps"
+     hx-get="/api/workflow/status"
+     hx-trigger="every 10s"
+     hx-swap="none"
+     @htmx:after-request="refreshWorkflow($event.detail.xhr.response)">
+
+  <div class="relative flex flex-col lg:flex-row gap-0 lg:gap-0">
+
+    <!-- ── Step 1: Scrape ──────────────────────────────────────── -->
+    <div class="wf-step flex-1 bg-gray-900 border border-gray-800 rounded-xl p-5 relative">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold shrink-0">1</div>
+        <div>
+          <p class="font-semibold text-sm">Scrape Clips</p>
+          <p class="text-xs text-gray-500">Twitch · Kick · YouTube</p>
+        </div>
+      </div>
+      <div class="text-center my-4">
+        <p id="wf-clips" class="text-4xl font-bold text-blue-400">{{ state.clips }}</p>
+        <p class="text-xs text-gray-500 mt-1">clips in library</p>
+      </div>
+      <button hx-post="/api/workflow/scrape" hx-swap="none"
+              @htmx:after-request="$dispatch('flash', {msg: 'Scraper running in background!', type: 'ok'})"
+              class="w-full text-xs bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
+        ▶ Scrape Now
+      </button>
+      <p class="text-xs text-gray-600 mt-2 text-center">or run <code class="text-gray-400">python scraper.py</code></p>
+    </div>
+
+    <!-- Arrow -->
+    <div class="hidden lg:flex items-center px-2 text-gray-700 text-xl shrink-0">→</div>
+    <div class="flex lg:hidden justify-center py-2 text-gray-700 text-xl">↓</div>
+
+    <!-- ── Step 2: Generate ───────────────────────────────────── -->
+    <div class="wf-step flex-1 bg-gray-900 border border-gray-800 rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-sm font-bold shrink-0">2</div>
+        <div>
+          <p class="font-semibold text-sm">Generate with Higgsfield</p>
+          <p class="text-xs text-gray-500">AI video transformation</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-2 my-4 text-center">
+        <div>
+          <p id="wf-queued" class="text-2xl font-bold text-yellow-400">{{ state.queued }}</p>
+          <p class="text-xs text-gray-500">queued</p>
+        </div>
+        <div>
+          <p id="wf-processing" class="text-2xl font-bold text-orange-400">{{ state.processing }}</p>
+          <p class="text-xs text-gray-500">processing</p>
+        </div>
+        <div>
+          <p id="wf-failed" class="text-2xl font-bold text-red-400">{{ state.failed }}</p>
+          <p class="text-xs text-gray-500">failed</p>
+        </div>
+      </div>
+      <a href="/clips" class="block w-full text-center text-xs bg-brand hover:bg-brand-dark text-white py-2 rounded-lg transition-colors">
+        Select Clips to Transform →
+      </a>
+    </div>
+
+    <!-- Arrow -->
+    <div class="hidden lg:flex items-center px-2 text-gray-700 text-xl shrink-0">→</div>
+    <div class="flex lg:hidden justify-center py-2 text-gray-700 text-xl">↓</div>
+
+    <!-- ── Step 3: Review outputs ─────────────────────────────── -->
+    <div class="wf-step flex-1 bg-gray-900 border border-gray-800 rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-sm font-bold shrink-0">3</div>
+        <div>
+          <p class="font-semibold text-sm">Review Outputs</p>
+          <p class="text-xs text-gray-500">Completed videos</p>
+        </div>
+      </div>
+      <div class="text-center my-4">
+        <p id="wf-done" class="text-4xl font-bold text-green-400">{{ state.done }}</p>
+        <p class="text-xs text-gray-500 mt-1">videos ready</p>
+      </div>
+      <a href="/jobs" class="block w-full text-center text-xs bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors">
+        View Completed Jobs →
+      </a>
+    </div>
+
+    <!-- Arrow -->
+    <div class="hidden lg:flex items-center px-2 text-gray-700 text-xl shrink-0">→</div>
+    <div class="flex lg:hidden justify-center py-2 text-gray-700 text-xl">↓</div>
+
+    <!-- ── Step 4: Schedule & Post ────────────────────────────── -->
+    <div class="wf-step flex-1 bg-gray-900 border border-gray-800 rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center text-sm font-bold shrink-0">4</div>
+        <div>
+          <p class="font-semibold text-sm">Schedule & Post</p>
+          <p class="text-xs text-gray-500">Twitter · YouTube · TikTok</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 my-4 text-center">
+        <div>
+          <p id="wf-pending-posts" class="text-2xl font-bold text-yellow-400">{{ state.pending_posts }}</p>
+          <p class="text-xs text-gray-500">scheduled</p>
+        </div>
+        <div>
+          <p id="wf-posted" class="text-2xl font-bold text-pink-400">{{ state.posted }}</p>
+          <p class="text-xs text-gray-500">posted</p>
+        </div>
+      </div>
+      <a href="/schedules" class="block w-full text-center text-xs bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-lg transition-colors">
+        Manage Schedule →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Auto-pipeline banner -->
+<div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+     x-data="{ on: {{ 'true' if state.pipeline_on else 'false' }} }">
+  <div>
+    <h2 class="font-semibold text-sm mb-1">Autonomous Mode</h2>
+    <p class="text-xs text-gray-500">When ON, all 4 steps run automatically on the configured interval — no manual action needed.</p>
+  </div>
+  <div class="flex items-center gap-4 shrink-0">
+    <span class="text-sm" :class="on ? 'text-green-400' : 'text-gray-500'" x-text="on ? '● ON' : '○ OFF'"></span>
+    <button @click="
+      on = !on;
+      fetch('/api/pipeline/' + (on ? 'enable' : 'disable'), {method:'POST'});
+      $dispatch('flash', {msg: on ? 'Autonomous mode ON' : 'Autonomous mode OFF', type: 'ok'})
+    "
+    :class="on ? 'bg-green-500' : 'bg-gray-600'"
+    class="relative inline-flex h-7 w-12 rounded-full transition-colors focus:outline-none">
+      <span :class="on ? 'translate-x-6' : 'translate-x-1'"
+            class="inline-block h-5 w-5 mt-1 rounded-full bg-white shadow transform transition-transform"></span>
+    </button>
+    <a href="/pipeline" class="text-xs text-brand-light hover:underline">Configure →</a>
+  </div>
+</div>
+
+<!-- Quick text-to-video -->
+<div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-5">
+  <h2 class="font-semibold text-sm mb-3">Quick Text-to-Video</h2>
+  <form hx-post="/api/jobs" hx-target="#wf-quick-result" hx-swap="innerHTML"
+        class="flex gap-3">
+    <input name="prompt" placeholder="Describe the video you want Higgsfield to generate…"
+           class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-brand" required>
+    <input type="hidden" name="duration_sec" value="4">
+    <input type="hidden" name="aspect_ratio" value="9:16">
+    <button class="shrink-0 bg-brand hover:bg-brand-dark text-white text-sm px-5 py-2 rounded-lg transition-colors">
+      Generate
+    </button>
+  </form>
+  <div id="wf-quick-result" class="mt-3"></div>
+</div>
+
+<script>
+function refreshWorkflow(raw) {
+  try {
+    const d = JSON.parse(raw);
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('wf-clips',         d.clips);
+    set('wf-queued',        d.queued);
+    set('wf-processing',    d.processing);
+    set('wf-failed',        d.failed);
+    set('wf-done',          d.done);
+    set('wf-pending-posts', d.pending_posts);
+    set('wf-posted',        d.posted);
+  } catch(e) {}
+}
+</script>
+
+{% endblock %}
